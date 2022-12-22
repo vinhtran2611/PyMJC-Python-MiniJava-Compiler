@@ -1,0 +1,9 @@
+class main extends abc {
+            int t;
+            float c;
+            int a (int tmp) {
+                int tmp;
+                tmp := 1 + 2;
+            }
+        }
+        

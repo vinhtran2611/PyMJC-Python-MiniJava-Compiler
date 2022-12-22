@@ -1,0 +1,4 @@
+class Shape{
+            final int a = 1 + 4, b = 2;
+            static float c,d = 0.20;
+        }

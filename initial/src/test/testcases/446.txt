@@ -1,0 +1,9 @@
+
+        class ABC {
+            static int x = 5;
+        }
+        class XYZ extends ABC {
+            float x = 7.7;
+            int x = 7.7;
+        }
+        

@@ -1,0 +1,6 @@
+
+        class X
+        {
+            final int x;
+        }
+        

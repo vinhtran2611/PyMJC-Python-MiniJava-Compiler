@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Shape),[AttributeDecl(Instance,VarDecl(Id(a),ArrayType(IntLit(3),IntType),[IntLit(1),IntLit(3),IntLit(4)]))])])

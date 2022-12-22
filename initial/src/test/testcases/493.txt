@@ -1,0 +1,7 @@
+
+        class A {
+            int math(int a, int b, float c) {
+                float a;
+            }
+        }
+        

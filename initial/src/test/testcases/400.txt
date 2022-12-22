@@ -1,0 +1,6 @@
+class main {
+            final int a = 3;
+            int foo() {
+                final int a := 8;
+            }
+        }

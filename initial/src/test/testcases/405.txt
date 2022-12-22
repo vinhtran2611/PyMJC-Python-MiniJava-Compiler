@@ -1,0 +1,10 @@
+class main {
+            static A t;
+            static void x () {
+                int a;
+            }
+        }
+        class abc {
+            abc x;
+        }
+        

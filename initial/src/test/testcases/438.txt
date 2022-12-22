@@ -1,0 +1,6 @@
+
+        class Ex
+        {
+            final int x = x;
+        }
+        

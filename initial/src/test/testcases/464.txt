@@ -1,0 +1,8 @@
+
+        class A 
+        {
+            int[5] a;
+            float x = a[0] + 6;
+            int y = a[0.5] + 7;
+        }
+        

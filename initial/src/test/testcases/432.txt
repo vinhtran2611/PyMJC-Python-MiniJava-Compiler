@@ -1,0 +1,10 @@
+
+        class A {
+            int X(int a, int b, int c) {
+                return a + b + c;
+            }
+            void main() {
+                
+            }
+        }
+        

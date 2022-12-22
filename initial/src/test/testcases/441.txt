@@ -1,0 +1,14 @@
+
+        class ABC
+        {
+            int x;
+            float y;
+            static string z;
+        }
+        class XYZ extends ABC
+        {
+            float x;
+            int y;
+            final int[3] z = {1,2,3};
+        }
+        

@@ -1,0 +1,14 @@
+
+        class A
+        {
+            int x = 5;
+            static int u = 10;
+        }
+        class B
+        {
+            A y = new A();
+            float z1 = y.x +5.5;
+            float z2 = y.x + 5;
+            final float u = A.u + 10;
+        }
+        

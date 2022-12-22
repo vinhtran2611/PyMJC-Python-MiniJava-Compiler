@@ -1,0 +1,7 @@
+class main {
+            int a () {
+                int t;
+                t := 0.5;
+            }
+        }
+        

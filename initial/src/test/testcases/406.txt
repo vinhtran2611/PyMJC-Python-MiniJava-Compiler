@@ -1,0 +1,4 @@
+class main {
+            final int a = 1.0 % 2;
+        }
+        

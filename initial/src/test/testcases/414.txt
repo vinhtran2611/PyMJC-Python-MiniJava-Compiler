@@ -1,0 +1,7 @@
+class main extends abc {
+            final int t = 6;
+            int a (int tmp) {
+                t := 5;
+            }
+        }
+        

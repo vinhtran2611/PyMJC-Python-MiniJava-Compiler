@@ -1,0 +1,13 @@
+
+        class Test
+        {
+            int x;
+            int y;
+            int z;
+            final int u = 5;
+            final int v = 5 + u;
+            void run(int x, int y, float z) {
+                continue;
+            }
+        }
+        

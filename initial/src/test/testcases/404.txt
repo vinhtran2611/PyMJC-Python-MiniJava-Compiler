@@ -1,0 +1,7 @@
+class main {
+            void a () {
+                int a;
+                int a;
+            }
+        }
+        

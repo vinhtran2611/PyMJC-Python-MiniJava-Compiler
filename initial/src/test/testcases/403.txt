@@ -1,0 +1,4 @@
+class main {
+            static int a;
+            static int a;
+        }

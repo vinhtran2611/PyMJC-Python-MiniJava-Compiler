@@ -1,0 +1,6 @@
+class main {
+            final int a;
+            int foo() {
+                final int b;
+            }
+        }

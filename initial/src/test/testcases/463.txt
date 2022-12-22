@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(A),[AttributeDecl(Instance,VarDecl(Id(a),ArrayType(5,IntType))),AttributeDecl(Instance,VarDecl(Id(x),FloatType,BinaryOp(+,ArrayCell(Id(a),IntLit(0)),IntLit(6)))),AttributeDecl(Instance,VarDecl(Id(x),FloatType,BinaryOp(+,ArrayCell(Id(a),FloatLit(0.5)),IntLit(7))))])])

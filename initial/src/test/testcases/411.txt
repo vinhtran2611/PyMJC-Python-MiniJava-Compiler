@@ -1,0 +1,12 @@
+class main {
+            int t;
+            int a () {
+                int tmp;
+                abc x;
+                tmp := x.def;
+            }
+        }
+        class abc {
+            static int def;
+        }
+        

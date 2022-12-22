@@ -1,0 +1,13 @@
+
+        class A {
+            int x = 5;
+        }
+        class B extends A {
+            int x = 6;
+            int y = 7;
+        }
+        class C extends B {
+            int z = 8;
+            final float u = 10 + e;
+        }
+        

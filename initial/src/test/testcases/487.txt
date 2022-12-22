@@ -1,0 +1,13 @@
+
+        class ABC {
+            int x = 5;
+            final int y = 7;
+            final static int z = 9;
+        }
+        class XYZ extends ABC {
+            int x = 6 + y;
+        }
+        class U extends XYZ {
+            final int x = x;
+        }
+        

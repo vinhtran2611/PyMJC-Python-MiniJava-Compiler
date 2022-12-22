@@ -1,0 +1,4 @@
+class Shape {
+            int a;
+            void f(){}
+        }

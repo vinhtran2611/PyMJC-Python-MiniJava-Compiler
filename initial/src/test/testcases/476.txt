@@ -1,0 +1,6 @@
+
+        class ABC
+        {
+            final float[3] a = {1,2,4};
+        }
+        

@@ -1,0 +1,5 @@
+
+        class ABC {
+            void count(int a, int b, A a) {}
+        }
+        

@@ -1,0 +1,1 @@
+Illegal Constant Expression: BinaryOp(+,FieldAccess(Id(A),Id(u)),IntLit(10))

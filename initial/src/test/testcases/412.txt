@@ -1,0 +1,11 @@
+class main extends abc {
+            int t;
+            int a () {
+                int tmp;
+                tmp := this.def;
+            }
+        }
+        class abc {
+            static int def;
+        }
+        

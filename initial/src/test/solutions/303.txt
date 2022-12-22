@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Shape),[AttributeDecl(Instance,VarDecl(Id(a),IntType,IntLit(3))),AttributeDecl(Instance,VarDecl(Id(b),FloatType,FloatLit(3.5))),AttributeDecl(Instance,VarDecl(Id(c),BoolType,BooleanLit(False))),AttributeDecl(Instance,VarDecl(Id(d),StringType,StringLit("hello")))])])

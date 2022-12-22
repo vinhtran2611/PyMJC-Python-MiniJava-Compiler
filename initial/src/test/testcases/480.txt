@@ -1,0 +1,7 @@
+
+        class X
+        {
+            float x = 5 + 2 + 4.4 + 6 + 7;
+            final int y = 1 + a;
+        }
+        

@@ -1,0 +1,11 @@
+class main {
+            int t;
+            int a () {
+                int tmp;
+                tmp := abc.def;
+            }
+        }
+        class abc {
+            int def;
+        }
+        

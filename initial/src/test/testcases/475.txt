@@ -1,0 +1,7 @@
+
+        class ABC
+        {
+            int[3] a = {1,2,3};
+            final int[3] b = {1,2,3e6};
+        }
+        

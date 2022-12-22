@@ -1,0 +1,6 @@
+
+        class ABC {
+            final float x = 1 + 2.2;
+            final float y = 1 + 2;
+        }
+        

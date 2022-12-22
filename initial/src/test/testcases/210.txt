@@ -1,0 +1,8 @@
+class Shape{
+            final int a = 1 + 4, b = 2;
+            static float c,d = 0.20;
+
+            void main(){
+                x.b[2] := x.m()[3];
+            }
+        }

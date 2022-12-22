@@ -1,0 +1,3 @@
+class Shape {
+            int[1] a := {};        
+        }
