@@ -1,6 +1,6 @@
 class main {
-            final int a;
+            final int a = 3;
             int foo() {
-                final int b;
+                int c, c;
             }
         }

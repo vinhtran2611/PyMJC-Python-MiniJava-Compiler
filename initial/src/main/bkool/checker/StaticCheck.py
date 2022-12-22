@@ -18,7 +18,14 @@ class Symbol:
         self.mtype = mtype
         self.value = value
         self.details = details
+    def __str__(self) -> str:
+        return f"Symbol(Name: {self.name}, Type: {self.mtype}, Value: {self.value})"
 
+def intersection(lst1, lst2): 
+    for value in lst1:
+        if value in lst2:
+            return True
+    return False
 
 class Env:
     def __init__(self, globalEnv={}, localEnv=None, current_classEnv=None):
@@ -174,12 +181,12 @@ class StaticChecker(BaseVisitor):
         if ast.value is None:
             raise TypeMismatchInConstant(ast)
         
-        value_typ = self.visit(ast.value, class_env).mtype # return Symbol().mtype
-        print(value_typ, ast.constType)
+        value_typ = self.visit(ast.value, class_env) # return Symbol().mtype
         if type(ast.constType) is FloatType and type(value_typ) not in [FloatType, IntType]:
-            raise TypeMismatchInConstant(ast)
-        elif type(ast.constType) != type(value_typ):
-            raise TypeMismatchInConstant(ast)
+            raise TypeMismatchInStatement(ast)
+        elif type(ast.constType) != value_typ:
+            print(type(ast.constType), value_typ)
+            raise TypeMismatchInStatement(ast)
         
     def visitVarDecl(self, ast, class_env):
         # variable : Id
@@ -190,11 +197,12 @@ class StaticChecker(BaseVisitor):
                 raise Undeclared(Class(), ast.varType.classname.name)
         
         if ast.varInit:
-            value_typ = self.visit(ast.varInit, class_env).mtype # return Symbol().mtype
+            value_typ = self.visit(ast.varInit, class_env) 
             if type(ast.varType) is FloatType and type(value_typ) not in [FloatType, IntType]:
-                raise TypeMismatchInConstant(ast)
+                raise TypeMismatchInStatement(ast)
             elif type(ast.varType) != type(value_typ):
-                raise TypeMismatchInConstant(ast)
+                print(type(ast.varType), type(value_typ))
+                raise TypeMismatchInStatement(ast)
 
         if ast.variable.name in class_env["local"]:
             raise Redeclared(Variable(), ast.variable.name)
@@ -204,6 +212,7 @@ class StaticChecker(BaseVisitor):
         # decl:List[StoreDecl]
         # stmt:List[Stmt]
         for decl in ast.decl:
+            print(decl)
             self.visit(decl, method_env)
             if isinstance(decl, ConstDecl):
                 class_name = method_env["current_class"]
@@ -227,48 +236,79 @@ class StaticChecker(BaseVisitor):
         if r is None:
             raise Undeclared(Identifier(), ast.right.name)
 
-        # Arithmetic
-        if ast.op in ["+", "-", "*", "/", "\\", "%"]:   
-            if not l.mtype and r.mtype in [IntType, FloatType]:
+        print(f"left: {l}, right: {r}")
+        if ast.op in ["+", "-", "*", "/", "<", "<=", ">", ">="]:
+            if intersection([l, r], [BoolType, StringType]):
                 raise TypeMismatchInExpression(ast)
-            elif (
-                type(l.mtype) != type(r.mtype)
-                and l.mtype != IntType
-                and (ast.op in ["\\", "%"])
-            ):
+            
+            if ast.op == '/':
+                return FloatType
+            elif l is IntType and r  is IntType:
+                return IntType
+            return FloatType
+        elif ast.op in ["\\", "%"]:
+            if intersection([l, r], [FloatType, BoolType, StringType]):
                 raise TypeMismatchInExpression(ast)
-            elif ast.op == "/":
-                return Symbol("", FloatType)
-            elif type(l.mtype) != type(r.mtype):
-                return Symbol("", FloatType)
-            else:
-                return l
-
-        # Boolean
-        elif ast.op in ["&&", "||"]:
-            if not l.mtype and r.mtype == BoolType:
+            return IntType
+        elif ast.op in ["==", "!="]:
+            if intersection([l, r], [FloatType, StringType]):
                 raise TypeMismatchInExpression(ast)
-            else:
-                return Symbol("", BoolType)
-
-        # Relational
-        elif ast.op in ["==", "!=", ">", "<", ">=", "<="]:
-            if ast.op in ["==", "!="]:
-                if (not l.mtype and r.mtype in [IntType, BoolType]) or type(
-                    l.mtype
-                ) != type(r.mtype):
-                    raise TypeMismatchInExpression(ast)
-            else:
-                if not l.mtype and r.mtype in [IntType, FloatType]:
-                    raise TypeMismatchInExpression(ast)
-
-            return Symbol("", BoolType)
-
-        # String
-        elif ast.op == "^":
-            if l.mtype and r.mtype != StringType:
+            
+            if l !=  r:
                 raise TypeMismatchInExpression(ast)
-            return Symbol("", BoolType)
+            return l
+        elif ast.op in ["&&", "||", "!"]:
+            if intersection([l, r], [IntType, FloatType, StringType]):
+                raise TypeMismatchInExpression(ast)
+            return BoolType
+        elif ast.op in ["^"]:
+            if intersection([l, r], [IntType, FloatType, BoolType]):
+                raise TypeMismatchInExpression(ast)
+            return StringType
+
+        
+        # # Arithmetic
+        # if ast.op in ["+", "-", "*", "/", "\\", "%"]:
+        #     if not l.mtype and r.mtype in [IntType, FloatType]:
+        #         raise TypeMismatchInExpression(ast)
+        #     elif (
+        #         type(l.mtype) != type(r.mtype)
+        #         and l.mtype != IntType
+        #         and (ast.op in ["\\", "%"])
+        #     ):
+        #         raise TypeMismatchInExpression(ast)
+        #     elif ast.op == "/":
+        #         return Symbol("", FloatType)
+        #     elif type(l.mtype) != type(r.mtype):
+        #         return Symbol("", FloatType)
+        #     else:
+        #         return l
+
+        # # Boolean
+        # elif ast.op in ["&&", "||"]:
+        #     if not l.mtype and r.mtype == BoolType:
+        #         raise TypeMismatchInExpression(ast)
+        #     else:
+        #         return Symbol("", BoolType)
+
+        # # Relational
+        # elif ast.op in ["==", "!=", ">", "<", ">=", "<="]:
+        #     if ast.op in ["==", "!="]:
+        #         if (not l.mtype and r.mtype in [IntType, BoolType]) or type(
+        #             l.mtype
+        #         ) != type(r.mtype):
+        #             raise TypeMismatchInExpression(ast)
+        #     else:
+        #         if not l.mtype and r.mtype in [IntType, FloatType]:
+        #             raise TypeMismatchInExpression(ast)
+
+        #     return Symbol("", BoolType)
+
+        # # String
+        # elif ast.op == "^":
+        #     if l.mtype and r.mtype != StringType:
+        #         raise TypeMismatchInExpression(ast)
+        #     return Symbol("", BoolType)
 
     def visitUnaryOp(self, ast, o):
         # op:str
@@ -357,16 +397,16 @@ class StaticChecker(BaseVisitor):
         raise Undeclared(Identifier(), ast.name)
 
     def visitIntLiteral(self, ast, o):
-        return Symbol("", IntType())
+        return IntType
 
     def visitFloatLiteral(self, ast, o):
-        return Symbol("", FloatType())
+        return FloatType
 
     def visitBooleanLiteral(self, ast, o):
-        return Symbol("", BoolType())
+        return BoolType
 
     def visitStringLiteral(self, ast, o):
-        return Symbol("", StringType())
+        return StringType
 
     def visitNullLiteral(self, ast, o):
         pass

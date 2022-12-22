@@ -1,1 +1,1 @@
-Redeclared Constant: a
+Type Mismatch In Statement: VarDecl(Id(c),IntType,BinaryOp(+,IntLit(2),FloatLit(3.0)))

@@ -76,27 +76,49 @@ class CheckerSuite(unittest.TestCase):
     #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
     #     CheckerSuite.num += 1
 
-    def test_redecl_constant_02(self):
-        input = """class main {
-            final int a = 3;
-            int foo() {
-                final int a := 8;
-            }
-        }"""
-        expect = "Redeclared Constant: a"
-        self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
-        CheckerSuite.num += 1
+    # def test_redecl_constant_02(self):
+    #     input = """class main {
+    #         final int a = 3;
+    #         int foo() {
+    #             final int a := 8;
+    #         }
+    #     }"""
+    #     expect = "Redeclared Constant: a"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
 
-    def test_vardecl(self):
+    # def test_vardecl(self):
+    #     input = """class main {
+    #         final int a = 3;
+    #         int foo() {
+    #             int c, c;
+    #         }
+    #     }"""
+    #     expect = "Redeclared Variable: c"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
+
+    def test_binop_01(self):
         input = """class main {
             final int a = 3;
             int foo() {
-                int c, c;
+                int c := 2 + 3.0;
             }
         }"""
-        expect = "Redeclared Variable: c"
+        expect = "Type Mismatch In Statement: VarDecl(Id(c),IntType,BinaryOp(+,IntLit(2),FloatLit(3.0)))"
         self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
         CheckerSuite.num += 1
+    
+    # def test_binop_02(self):
+    #     input = """class main {
+    #         final int a = 3;
+    #         int foo() {
+    #             string c := "s" ^ "c";
+    #         }
+    #     }"""
+    #     expect = "Type Mismatch In Constant Declaration: VarDecl(Id(c),IntType,BinaryOp(+,IntLit(2),FloatLit(3.0)))"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
 
     # def test_attr_decl(self):
     #     input = """class main {

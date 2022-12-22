@@ -1,1 +1,1 @@
-Redeclared Variable: c
+Type Mismatch In Statement: VarDecl(Id(c),StringType,StringLit("s" ^ "c"))
