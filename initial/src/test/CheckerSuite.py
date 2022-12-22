@@ -87,6 +87,17 @@ class CheckerSuite(unittest.TestCase):
         self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
         CheckerSuite.num += 1
 
+    def test_vardecl(self):
+        input = """class main {
+            final int a = 3;
+            int foo() {
+                int c, c;
+            }
+        }"""
+        expect = "Redeclared Variable: c"
+        self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+        CheckerSuite.num += 1
+
     # def test_attr_decl(self):
     #     input = """class main {
     #         int a = 1.2;

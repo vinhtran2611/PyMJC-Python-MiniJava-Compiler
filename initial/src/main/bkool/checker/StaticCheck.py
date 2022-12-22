@@ -161,40 +161,12 @@ class StaticChecker(BaseVisitor):
     def visitAttributeDecl(self, ast, class_env):
         # kind: SIKind #Instance or Static
         # decl: StoreDecl # VarDecl for mutable or ConstDecl for immutable
-        decl = ast.decl
-        self.visit(decl, class_env)
-        if isinstance(decl, VarDecl):
-            if isinstance(decl.varType, ClassType):
-                if decl.varType.classname.name not in class_env["global"]:
-                    raise Undeclared(Class(), decl.varType.classname.name)
-            
-            if decl.varInit:
-                value_typ = self.visit(decl.varInit, class_env).mtype # return Symbol().mtype
-                print(value_typ)
-                if type(decl.varType) is FloatType and type(value_typ) not in [FloatType, IntType]:
-                    raise TypeMismatchInConstant(decl)
-                elif type(decl.varType) != type(value_typ):
-                    raise TypeMismatchInConstant(decl)
-        elif isinstance(decl, ConstDecl):
-            if isinstance(decl.constType, ClassType):
-                if decl.constType.classname.name not in class_env["global"]:
-                    raise Undeclared(Class(), decl.constType.classname.name)
-
-            if decl.value is None:
-                raise TypeMismatchInConstant(decl)
-
-            value_typ = self.visit(decl.value, class_env).mtype # return Symbol().mtype
-            if type(decl.constType) is FloatType and type(value_typ) not in [FloatType, IntType]:
-                raise TypeMismatchInConstant(decl)
-            elif type(decl.constType) != type(value_typ):
-                raise TypeMismatchInConstant(decl)
-        # o['global'][o['current_class']]['members'][ast.decl.constant.name] = [ast.kind, Symbol(decl.constant.name, typ, 'constant')]
+        self.visit(ast.decl, class_env)
 
     def visitConstDecl(self, ast, class_env):
         # constant : Id
         # constType : Type
         # value : Expr
-        
         if isinstance(ast.constType, ClassType):
             if ast.constType.classname.name not in class_env["global"]:
                 raise Undeclared(Class(), ast.constType.classname.name)
@@ -209,24 +181,30 @@ class StaticChecker(BaseVisitor):
         elif type(ast.constType) != type(value_typ):
             raise TypeMismatchInConstant(ast)
         
-    def visitVarDecl(self, ast, o):
+    def visitVarDecl(self, ast, class_env):
         # variable : Id
         # varType : Type
         # varInit : Expr = None # None if there is no initial
-        if ast.variable.name in o["local"]:
-            raise Redeclared(Variable(), ast.variable.name)
-        if type(ast.varType) is ClassType:
-            if not ast.varType.classname.name in o["global"]:
+        if isinstance(ast.varType, ClassType):
+            if ast.varType.classname.name not in class_env["global"]:
                 raise Undeclared(Class(), ast.varType.classname.name)
-        o["local"][ast.variable.name] = Symbol(ast.variable.name, ast.varType)
+        
+        if ast.varInit:
+            value_typ = self.visit(ast.varInit, class_env).mtype # return Symbol().mtype
+            if type(ast.varType) is FloatType and type(value_typ) not in [FloatType, IntType]:
+                raise TypeMismatchInConstant(ast)
+            elif type(ast.varType) != type(value_typ):
+                raise TypeMismatchInConstant(ast)
+
+        if ast.variable.name in class_env["local"]:
+            raise Redeclared(Variable(), ast.variable.name)
+        class_env["local"][ast.variable.name] = Symbol(ast.variable.name, ast.varType)
 
     def visitBlock(self, ast, method_env):
         # decl:List[StoreDecl]
         # stmt:List[Stmt]
         for decl in ast.decl:
-            print(type(decl)) 
             self.visit(decl, method_env)
-            print(isinstance(decl, ConstDecl))   
             if isinstance(decl, ConstDecl):
                 class_name = method_env["current_class"]
                 if decl.constant.name in method_env["global"][class_name]["members"]:
@@ -238,18 +216,19 @@ class StaticChecker(BaseVisitor):
         for stmt in ast.stmt:
             self.visit(stmt, method_env) 
 
-    def visitBinaryOp(self, ast, o):
+    def visitBinaryOp(self, ast, method_env):
         # op:str
         # left:Expr
         # right:Expr
-        l = self.visit(ast.left, o)
-        r = self.visit(ast.right, o)
+        l = self.visit(ast.left, method_env)
+        r = self.visit(ast.right, method_env)
         if l is None:
             raise Undeclared(Identifier(), ast.left.name)
         if r is None:
             raise Undeclared(Identifier(), ast.right.name)
+
         # Arithmetic
-        if ast.op in ["+", "-", "*", "/", "\\", "%"]:
+        if ast.op in ["+", "-", "*", "/", "\\", "%"]:   
             if not l.mtype and r.mtype in [IntType, FloatType]:
                 raise TypeMismatchInExpression(ast)
             elif (

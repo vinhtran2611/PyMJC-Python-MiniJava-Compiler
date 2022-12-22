@@ -1,1 +1,1 @@
-Type Mismatch In Constant Declaration: ConstDecl(Id(a),IntType,None)
+Redeclared Variable: c
