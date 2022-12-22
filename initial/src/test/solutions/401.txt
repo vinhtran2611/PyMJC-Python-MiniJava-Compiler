@@ -1,1 +1,1 @@
-Type Mismatch In Statement: VarDecl(Id(c),StringType,StringLit("s" ^ "c"))
+Cannot Assign To Constant: AssignStmt(Id(a),IntLit(5))

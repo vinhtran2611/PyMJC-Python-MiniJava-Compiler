@@ -1,1 +1,1 @@
-Redeclared Variable: c
+Type Mismatch In Statement: VarDecl(Id(b),IntType,BinaryOp(==,IntLit(1),IntLit(1)))

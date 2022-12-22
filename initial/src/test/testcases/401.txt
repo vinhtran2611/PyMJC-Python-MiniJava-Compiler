@@ -1,6 +1,6 @@
 class main {
-            final int a = 3;
             int foo() {
-                string c := "s" ^ "c";
+                final int a := 3;
+                a := 5;
             }
         }

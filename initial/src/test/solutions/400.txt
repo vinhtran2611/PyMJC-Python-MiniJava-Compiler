@@ -1,1 +1,1 @@
-Type Mismatch In Statement: VarDecl(Id(c),IntType,BinaryOp(+,IntLit(2),FloatLit(3.0)))
+Type Mismatch In Statement: AssignStmt(Id(a),FloatLit(3.0))

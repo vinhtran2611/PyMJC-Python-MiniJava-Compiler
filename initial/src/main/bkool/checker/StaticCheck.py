@@ -198,10 +198,10 @@ class StaticChecker(BaseVisitor):
         
         if ast.varInit:
             value_typ = self.visit(ast.varInit, class_env) 
-            if type(ast.varType) is FloatType and type(value_typ) not in [FloatType, IntType]:
+            print(ast.varType, value_typ)
+            if type(ast.varType) is FloatType and value_typ not in [FloatType, IntType]:
                 raise TypeMismatchInStatement(ast)
-            elif type(ast.varType) != type(value_typ):
-                print(type(ast.varType), type(value_typ))
+            elif type(ast.varType) != value_typ:
                 raise TypeMismatchInStatement(ast)
 
         if ast.variable.name in class_env["local"]:
@@ -256,7 +256,7 @@ class StaticChecker(BaseVisitor):
             
             if l !=  r:
                 raise TypeMismatchInExpression(ast)
-            return l
+            return BoolType
         elif ast.op in ["&&", "||", "!"]:
             if intersection([l, r], [IntType, FloatType, StringType]):
                 raise TypeMismatchInExpression(ast)
@@ -266,75 +266,34 @@ class StaticChecker(BaseVisitor):
                 raise TypeMismatchInExpression(ast)
             return StringType
 
-        
-        # # Arithmetic
-        # if ast.op in ["+", "-", "*", "/", "\\", "%"]:
-        #     if not l.mtype and r.mtype in [IntType, FloatType]:
-        #         raise TypeMismatchInExpression(ast)
-        #     elif (
-        #         type(l.mtype) != type(r.mtype)
-        #         and l.mtype != IntType
-        #         and (ast.op in ["\\", "%"])
-        #     ):
-        #         raise TypeMismatchInExpression(ast)
-        #     elif ast.op == "/":
-        #         return Symbol("", FloatType)
-        #     elif type(l.mtype) != type(r.mtype):
-        #         return Symbol("", FloatType)
-        #     else:
-        #         return l
-
-        # # Boolean
-        # elif ast.op in ["&&", "||"]:
-        #     if not l.mtype and r.mtype == BoolType:
-        #         raise TypeMismatchInExpression(ast)
-        #     else:
-        #         return Symbol("", BoolType)
-
-        # # Relational
-        # elif ast.op in ["==", "!=", ">", "<", ">=", "<="]:
-        #     if ast.op in ["==", "!="]:
-        #         if (not l.mtype and r.mtype in [IntType, BoolType]) or type(
-        #             l.mtype
-        #         ) != type(r.mtype):
-        #             raise TypeMismatchInExpression(ast)
-        #     else:
-        #         if not l.mtype and r.mtype in [IntType, FloatType]:
-        #             raise TypeMismatchInExpression(ast)
-
-        #     return Symbol("", BoolType)
-
-        # # String
-        # elif ast.op == "^":
-        #     if l.mtype and r.mtype != StringType:
-        #         raise TypeMismatchInExpression(ast)
-        #     return Symbol("", BoolType)
-
-    def visitUnaryOp(self, ast, o):
+    def visitUnaryOp(self, ast, method_env):
         # op:str
         # body:Expr
-        body = self.visit(ast.body, o)
+        typ = self.visit(ast.body, method_env)
 
         if ast.op in ["+", "-"]:
-            if not body.mtype in [IntType, FloatType]:
+            if typ.mtype not in [IntType, FloatType]:
                 raise TypeMismatchInExpression(ast)
-            else:
-                return body.mtype
-
         elif ast.op == "!":
-            if body.mtype != BoolType:
+            if typ != BoolType:
                 raise TypeMismatchInExpression(ast)
+        return typ
 
-    def visitAssign(self, ast, o):
+    def visitAssign(self, ast, method_env):
         # lhs:Expr
         # exp:Expr
-        lhs = self.visit(ast.lhs, o)
+        exp = self.visit(ast.exp, method_env)
+        lhs = self.visit(ast.lhs, method_env)
+        
+        if isinstance(lhs, Id) == False:
+            TypeMismatchInStatement(ast)            
+
         if lhs.value == "constant":
             raise CannotAssignToConstant(ast)
 
-        exp = self.visit(ast.exp, o)
-        if type(lhs.mtype) != type(exp.mtype):
+        if type(lhs.mtype) != exp:
             raise TypeMismatchInStatement(ast)
+        return exp
 
     def visitFieldAccess(self, ast, o):
         # obj:Expr

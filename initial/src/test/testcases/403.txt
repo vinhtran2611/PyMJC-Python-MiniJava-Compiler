@@ -1,4 +1,6 @@
 class main {
-            static int a;
-            static int a;
+            final int a = 3;
+            int foo() {
+                int b := -1.0;
+            }
         }

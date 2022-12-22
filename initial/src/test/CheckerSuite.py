@@ -98,27 +98,60 @@ class CheckerSuite(unittest.TestCase):
     #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
     #     CheckerSuite.num += 1
 
-    def test_binop_01(self):
-        input = """class main {
-            final int a = 3;
-            int foo() {
-                int c := 2 + 3.0;
-            }
-        }"""
-        expect = "Type Mismatch In Statement: VarDecl(Id(c),IntType,BinaryOp(+,IntLit(2),FloatLit(3.0)))"
-        self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
-        CheckerSuite.num += 1
+    # def test_binop_01(self):
+    #     input = """class main {
+    #         final int a = 3;
+    #         int foo() {
+    #             int c := 2 + 3.0;
+    #         }
+    #     }"""
+    #     expect = "Type Mismatch In Statement: VarDecl(Id(c),IntType,BinaryOp(+,IntLit(2),FloatLit(3.0)))"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
     
     # def test_binop_02(self):
     #     input = """class main {
     #         final int a = 3;
     #         int foo() {
-    #             string c := "s" ^ "c";
+    #             string b := "s" ^ 1;
     #         }
     #     }"""
-    #     expect = "Type Mismatch In Constant Declaration: VarDecl(Id(c),IntType,BinaryOp(+,IntLit(2),FloatLit(3.0)))"
+    #     expect = "Type Mismatch In Expression: BinaryOp(^,StringLit(\"s\"),IntLit(1))"
     #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
     #     CheckerSuite.num += 1
+    
+    # def test_binop_03(self):
+    #     input = """class main {
+    #         final int a = 3;
+    #         int foo() {
+    #             int b := 1 == 1;
+    #         }
+    #     }"""
+    #     expect = "Type Mismatch In Statement: VarDecl(Id(b),IntType,BinaryOp(==,IntLit(1),IntLit(1)))"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
+
+    def test_assign_01(self):
+        input = """class main {
+            int foo() {
+                int a;
+                a := 3.0;
+            }
+        }"""
+        expect = "Type Mismatch In Statement: AssignStmt(Id(a),FloatLit(3.0))"
+        self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+        CheckerSuite.num += 1
+    
+    def test_assign_const(self):
+        input = """class main {
+            int foo() {
+                final int a := 3;
+                a := 5;
+            }
+        }"""
+        expect = "Cannot Assign To Constant: AssignStmt(Id(a),IntLit(5))"
+        self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+        CheckerSuite.num += 1
 
     # def test_attr_decl(self):
     #     input = """class main {
