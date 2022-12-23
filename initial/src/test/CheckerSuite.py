@@ -198,16 +198,115 @@ class CheckerSuite(unittest.TestCase):
     #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
     #     CheckerSuite.num += 1
     
-    def test_undeclare_id(self):
-        input = """class main {
+    # def test_undeclare_id(self):
+    #     input = """class main {
+    #         int x;
+    #         int foo(int a, int b) {
+    #             c := 3;
+    #         }
+    #     }"""
+    #     expect = "Undeclared Identifier: c"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
+
+    # def test_undeclare_class(self):
+    #     input = """
+    #     class HCN {
+    #         int x;
+    #         int y;
+    #         int funcA(){
+    #             return 1;
+    #         }
+    #     }
+    #     class main {
+    #         int area(){
+    #             HV a;
+    #             a.x := 3;
+    #             # int cv := 2 * (a.x + b.y);
+    #         }
+    #     }
+    #     """
+    #     expect = "Undeclared Class: HV"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
+    
+    # def test_field_access(self):
+    #     input = """
+    #     class HCN {
+    #         int x;
+    #         int y;
+    #         int funcA(){
+    #             return 1;
+    #         }
+    #     }
+    #     class main {
+    #         int area(){
+    #             HCN a;
+    #             a.z := 3;
+    #             # int cv := 2 * (a.x + b.y);
+    #         }
+    #     }
+    #     """
+    #     expect = "Illegal Member Access: FieldAccess(Id(a),Id(z))"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
+
+    def test_field_access_02(self):
+        input = """
+        class HCN {
             int x;
-            int foo(int a, int b) {
-                c := 3;
+            int y;
+            int funcA(){
+                return 1;
             }
-        }"""
-        expect = "Undeclared Identifier: c"
+        }
+        class main {
+            int area(){
+                HCN a;
+                a.z := 3;
+                int cv := a.x + a.y;
+            }
+        }
+        """
+        expect = "Undeclared Attribute: z"
         self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
         CheckerSuite.num += 1
+
+    def test_field_access_03(self):
+        input = """
+        class HCN {
+            int x;
+            int y;
+            int funcA(){
+                return 1;
+            }
+        }
+        class main {
+            int area(){
+                HCN a;
+                a.z := 3;
+                float cv := a.x + a.y;
+            }
+        }
+        """
+        expect = "Type Mismatch In Statement: VarDecl(Id(cv),FloatType,BinaryOp(+,FieldAccess(Id(a),Id(x)),FieldAccess(Id(a),Id(y))))"
+        self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+        CheckerSuite.num += 1
+
+
+    # def test_05(self):
+    #     input = """class main {
+    #         static A t;
+    #         static void x () {
+    #             int a;
+    #         }
+    #     }
+    #     class abc {
+    #         abc x;
+    #     }
+    #     """
+    #     expect = "Undeclared Class: A"
+    #     self.assertTrue(TestChecker.test(input,expect,405))
 
     # def test_attr_decl(self):
     #     input = """class main {

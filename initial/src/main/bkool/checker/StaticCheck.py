@@ -192,6 +192,7 @@ class StaticChecker(BaseVisitor):
         # varType : Type
         # varInit : Expr = None # None if there is no initial
         print(f"Vardecl: {ast}")
+        
 
         if isinstance(ast.varType, ClassType):
             if ast.varType.classname.name not in env["global"]:
@@ -199,9 +200,15 @@ class StaticChecker(BaseVisitor):
         
         if ast.varInit:
             value_typ = self.visit(ast.varInit, env) 
+            
             if type(ast.varType) is FloatType and value_typ not in [FloatType, IntType]:
                 raise TypeMismatchInStatement(ast)
             elif type(ast.varType) != value_typ:
+                print(f'Error')
+                print(type(ast.varInit))
+                print(f"value_typ: {value_typ}")
+                print(type(ast.varType), value_typ)
+                
                 raise TypeMismatchInStatement(ast)
         if "local" in env:
             if ast.variable.name in env["local"]:
@@ -228,24 +235,31 @@ class StaticChecker(BaseVisitor):
         # op:str
         # left:Expr
         # right:Expr
+        print(f"visitBinaryOp: {ast}")
+
         l = self.visit(ast.left, method_env)
         r = self.visit(ast.right, method_env)
-        if l is None:
-            raise Undeclared(Identifier(), ast.left.name)
-        if r is None:
-            raise Undeclared(Identifier(), ast.right.name)
+        if isinstance(l, Id):
+            if l is None:
+                raise Undeclared(Identifier(), ast.left.name)
+        if isinstance(r, Id):
+            if r is None:
+                raise Undeclared(Identifier(), ast.right.name)
+        print(l, r)
 
         if ast.op in ["+", "-", "*", "/", "<", "<=", ">", ">="]:
             if intersection([l, r], [BoolType, StringType]):
                 raise TypeMismatchInExpression(ast)
-            
             if ast.op == '/':
                 return FloatType
-            elif l is IntType and r  is IntType:
+            elif type(l) == IntType and type(r) == IntType:
                 return IntType
+            print(f"left: {ast.left}, right: {ast.right}")
+            print(l, r)
             return FloatType
         elif ast.op in ["\\", "%"]:
             if intersection([l, r], [FloatType, BoolType, StringType]):
+                
                 raise TypeMismatchInExpression(ast)
             return IntType
         elif ast.op in ["==", "!="]:
@@ -280,69 +294,63 @@ class StaticChecker(BaseVisitor):
     def visitAssign(self, ast, method_env):
         # lhs:Expr
         # exp:Expr
-        # print("Assign: {ast}")
+        print(f"Assign: {ast}")
+
         exp = self.visit(ast.exp, method_env)
         lhs = self.visit(ast.lhs, method_env)
 
         if isinstance(lhs, Id) == False:
             TypeMismatchInStatement(ast)            
 
-        if lhs.value == "constant":
-            raise CannotAssignToConstant(ast)
+        if isinstance(lhs, Symbol):
+            if lhs.value == "constant":
+                raise CannotAssignToConstant(ast)
 
-        if isinstance(exp, Symbol):
-            if type(lhs.mtype) != type(exp.mtype):
+            if isinstance(exp, Symbol):
+                if type(lhs.mtype) != type(exp.mtype):
+                    raise TypeMismatchInStatement(ast)
+            elif type(lhs.mtype) != exp:
                 raise TypeMismatchInStatement(ast)
-        elif type(lhs.mtype) != exp:
-            raise TypeMismatchInStatement(ast)
-        return exp
+            return exp
 
     def visitFieldAccess(self, ast, o):
         # obj:Expr
         # fieldname:Id
-        obj = self.visit(ast.obj, o)
-        typ = "objClass"
-        obj_name = obj.mtype.classname if type(obj.mtype) == ClassType else obj.name
-        if type(obj.mtype) != ClassType:
+
+        print(f"visitFieldAccess: {ast}")
+
+        obj_data = self.visit(ast.obj, o) # Symbol
+        
+        if type(obj_data.mtype) != ClassType:
             raise TypeMismatchInExpression(ast)
 
-        if obj.value in ["objClass", "class"]:
-            ancestor = obj_name.name if type(obj_name) == Id else obj_name
-            while ancestor != None:
-                if ast.fieldname.name in o["global"][ancestor]["members"]:
-                    if obj.value == "class":
-                        if (
-                            o["global"][ancestor]["members"][ast.fieldname.name][0]
-                            == Instance()
-                        ):
-                            raise IllegalMemberAccess(ast)
-                    elif obj.value == "objClass":
-                        if (
-                            o["global"][ancestor]["members"][ast.fieldname.name][0]
-                            == Static()
-                        ):
-                            raise IllegalMemberAccess(ast)
-                    typ = o["global"][ancestor]["members"][ast.fieldname.name][1]
-                    return Symbol("", typ)
-                else:
-                    ancestor = o["global"][ancestor]["parent"]
-
-            raise Undeclared(Identifier(), ast.fieldname.name)
-        else:
-            raise Undeclared(Class(), obj.name)
+        # typ = "objClass"
+        class_name = obj_data.mtype.classname.name
+        while True:
+            class_store = None
+            for cls_decl in o['global']:
+                if class_name == cls_decl:
+                    class_store = o['global'][cls_decl]
+            if class_store is None:
+                raise Undeclared(Class(), class_name)
+            
+            if ast.fieldname.name in class_store['members']:
+                return class_store['members'][ast.fieldname.name][1].mtype
+            
+            if class_store['parent'] is None:
+                break
+            class_name = class_store['parent']
+        raise Undeclared(Attribute(), ast.fieldname.name)
+        
 
     def visitId(self, ast, method_env):
         # class Id(LHS):
         # name:str
-        value = None
+        # print(f"visitId: {ast}")
+
         id_name = ast.name
         if id_name in method_env["local"]: #check local
-            if type(method_env["local"][id_name].mtype) == ClassType:
-                value = "objClass"
-                name = method_env["local"][id_name].mtype.classname.name
-            if method_env["local"][id_name].value == "constant":
-                value = "constant"
-            return Symbol(id_name, method_env["local"][id_name].mtype, value)
+            return Symbol(id_name, method_env["local"][id_name].mtype)
 
         class_name = method_env["current_class"]
         if id_name in method_env["global"][class_name]["members"]: #check global

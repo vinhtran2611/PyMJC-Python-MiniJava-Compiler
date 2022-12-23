@@ -1,7 +1,16 @@
-class main {
-            int foo() {
-                int a;
-                float b;
-                a := b := 3.0;
+
+        class HCN {
+            int x;
+            int y;
+            int funcA(){
+                return 1;
             }
         }
+        class main {
+            int area(){
+                HCN a;
+                a.z := 3;
+                float cv := a.x + a.y;
+            }
+        }
+        
