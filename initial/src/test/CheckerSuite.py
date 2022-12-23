@@ -175,26 +175,37 @@ class CheckerSuite(unittest.TestCase):
     #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
     #     CheckerSuite.num += 1
     
-    def test_multi_assign(self):
-        input = """class main {
-            int foo() {
-                int a, b;
-                a := b := 3.0;
-            }
-        }"""
-        expect = "Type Mismatch In Statement: AssignStmt(Id(b),FloatLit(3.0))"
-        self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
-        CheckerSuite.num += 1
+    # def test_multi_assign(self):
+    #     input = """class main {
+    #         int foo() {
+    #             int a, b;
+    #             a := b := 3.0;
+    #         }
+    #     }"""
+    #     expect = "Type Mismatch In Statement: AssignStmt(Id(b),FloatLit(3.0))"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
 
-    def test_multi_assign_02(self):
+    # def test_multi_assign_02(self):
+    #     input = """class main {
+    #         int foo() {
+    #             int a;
+    #             float b;
+    #             a := b := 3.0;
+    #         }
+    #     }"""
+    #     expect = "Type Mismatch In Statement: AssignStmt(Id(a),Id(b))"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
+    
+    def test_undeclare_id(self):
         input = """class main {
-            int foo() {
-                int a;
-                float b;
-                a := b := 3.0;
+            int x;
+            int foo(int a, int b) {
+                c := 3;
             }
         }"""
-        expect = "Type Mismatch In Statement: AssignStmt(Id(a),Id(b))"
+        expect = "Undeclared Identifier: c"
         self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
         CheckerSuite.num += 1
 

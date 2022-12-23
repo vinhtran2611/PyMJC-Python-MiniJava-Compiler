@@ -187,24 +187,26 @@ class StaticChecker(BaseVisitor):
         elif type(ast.constType) != value_typ:
             raise TypeMismatchInStatement(ast)
         
-    def visitVarDecl(self, ast, class_env):
+    def visitVarDecl(self, ast, env):
         # variable : Id
         # varType : Type
         # varInit : Expr = None # None if there is no initial
+        print(f"Vardecl: {ast}")
+
         if isinstance(ast.varType, ClassType):
-            if ast.varType.classname.name not in class_env["global"]:
+            if ast.varType.classname.name not in env["global"]:
                 raise Undeclared(Class(), ast.varType.classname.name)
         
         if ast.varInit:
-            value_typ = self.visit(ast.varInit, class_env) 
+            value_typ = self.visit(ast.varInit, env) 
             if type(ast.varType) is FloatType and value_typ not in [FloatType, IntType]:
                 raise TypeMismatchInStatement(ast)
             elif type(ast.varType) != value_typ:
                 raise TypeMismatchInStatement(ast)
-
-        if ast.variable.name in class_env["local"]:
-            raise Redeclared(Variable(), ast.variable.name)
-        class_env["local"][ast.variable.name] = Symbol(ast.variable.name, ast.varType)
+        if "local" in env:
+            if ast.variable.name in env["local"]:
+                raise Redeclared(Variable(), ast.variable.name)
+            env["local"][ast.variable.name] = Symbol(ast.variable.name, ast.varType)
 
     def visitBlock(self, ast, method_env):
         # decl:List[StoreDecl]
@@ -278,12 +280,10 @@ class StaticChecker(BaseVisitor):
     def visitAssign(self, ast, method_env):
         # lhs:Expr
         # exp:Expr
+        # print("Assign: {ast}")
         exp = self.visit(ast.exp, method_env)
         lhs = self.visit(ast.lhs, method_env)
-        print(f"visitAssign: {ast}")
-        print(f"Exp: {exp}")
-        print(f"lhs: {lhs}")
-        
+
         if isinstance(lhs, Id) == False:
             TypeMismatchInStatement(ast)            
 
@@ -291,8 +291,6 @@ class StaticChecker(BaseVisitor):
             raise CannotAssignToConstant(ast)
 
         if isinstance(exp, Symbol):
-            print(lhs.mtype, exp.mtype)
-            print(type(lhs.mtype) != type(exp.mtype))
             if type(lhs.mtype) != type(exp.mtype):
                 raise TypeMismatchInStatement(ast)
         elif type(lhs.mtype) != exp:
@@ -333,31 +331,27 @@ class StaticChecker(BaseVisitor):
         else:
             raise Undeclared(Class(), obj.name)
 
-    def visitId(self, ast, o):
+    def visitId(self, ast, method_env):
+        # class Id(LHS):
+        # name:str
         value = None
-        name = ast.name
-        if ast.name in o["local"]:
-            if type(o["local"][ast.name].mtype) == ClassType:
+        id_name = ast.name
+        if id_name in method_env["local"]: #check local
+            if type(method_env["local"][id_name].mtype) == ClassType:
                 value = "objClass"
-                name = o["local"][ast.name].mtype.classname.name
-            if o["local"][ast.name].value == "constant":
+                name = method_env["local"][id_name].mtype.classname.name
+            if method_env["local"][id_name].value == "constant":
                 value = "constant"
-            return Symbol(name, o["local"][ast.name].mtype, value)
+            return Symbol(id_name, method_env["local"][id_name].mtype, value)
 
-        if ast.name in o["global"][o["current_class"]]["members"]:
-            if o["global"][o["current_class"]]["members"][ast.name][1].value == "constant":
-                return o["global"][o["current_class"]]["members"][ast.name][1]
-            else:
-                return Symbol(
-                    o["current_class"],
-                    o["global"][o["current_class"]]["members"][ast.name][1],
-                    "memClass",
-                )
+        class_name = method_env["current_class"]
+        if id_name in method_env["global"][class_name]["members"]: #check global
+            return method_env["global"][class_name]["members"][id_name][1]  # return Symbol
 
-        if ast.name in o["global"]:
-            return Symbol(ast.name, ClassType(ast.name), "class")
+        if id_name in method_env["global"]: # for field asscess
+            return Symbol(id_name, ClassType(id_name), "class")
 
-        raise Undeclared(Identifier(), ast.name)
+        raise Undeclared(Identifier(), id_name)
 
     def visitIntLiteral(self, ast, o):
         return IntType
