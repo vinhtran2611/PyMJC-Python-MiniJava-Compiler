@@ -185,7 +185,6 @@ class StaticChecker(BaseVisitor):
         if type(ast.constType) is FloatType and type(value_typ) not in [FloatType, IntType]:
             raise TypeMismatchInStatement(ast)
         elif type(ast.constType) != value_typ:
-            print(type(ast.constType), value_typ)
             raise TypeMismatchInStatement(ast)
         
     def visitVarDecl(self, ast, class_env):
@@ -198,7 +197,6 @@ class StaticChecker(BaseVisitor):
         
         if ast.varInit:
             value_typ = self.visit(ast.varInit, class_env) 
-            print(ast.varType, value_typ)
             if type(ast.varType) is FloatType and value_typ not in [FloatType, IntType]:
                 raise TypeMismatchInStatement(ast)
             elif type(ast.varType) != value_typ:
@@ -212,7 +210,6 @@ class StaticChecker(BaseVisitor):
         # decl:List[StoreDecl]
         # stmt:List[Stmt]
         for decl in ast.decl:
-            print(decl)
             self.visit(decl, method_env)
             if isinstance(decl, ConstDecl):
                 class_name = method_env["current_class"]
@@ -236,7 +233,6 @@ class StaticChecker(BaseVisitor):
         if r is None:
             raise Undeclared(Identifier(), ast.right.name)
 
-        print(f"left: {l}, right: {r}")
         if ast.op in ["+", "-", "*", "/", "<", "<=", ">", ">="]:
             if intersection([l, r], [BoolType, StringType]):
                 raise TypeMismatchInExpression(ast)
@@ -284,6 +280,9 @@ class StaticChecker(BaseVisitor):
         # exp:Expr
         exp = self.visit(ast.exp, method_env)
         lhs = self.visit(ast.lhs, method_env)
+        print(f"visitAssign: {ast}")
+        print(f"Exp: {exp}")
+        print(f"lhs: {lhs}")
         
         if isinstance(lhs, Id) == False:
             TypeMismatchInStatement(ast)            
@@ -291,7 +290,12 @@ class StaticChecker(BaseVisitor):
         if lhs.value == "constant":
             raise CannotAssignToConstant(ast)
 
-        if type(lhs.mtype) != exp:
+        if isinstance(exp, Symbol):
+            print(lhs.mtype, exp.mtype)
+            print(type(lhs.mtype) != type(exp.mtype))
+            if type(lhs.mtype) != type(exp.mtype):
+                raise TypeMismatchInStatement(ast)
+        elif type(lhs.mtype) != exp:
             raise TypeMismatchInStatement(ast)
         return exp
 

@@ -1,6 +1,7 @@
 class main {
             int foo() {
-                final int a := 3;
-                a := 5;
+                int a;
+                float b;
+                a := b := 3.0;
             }
         }

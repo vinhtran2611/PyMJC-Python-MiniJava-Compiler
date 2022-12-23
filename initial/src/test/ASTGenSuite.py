@@ -507,8 +507,8 @@ class ASTGenSuite(unittest.TestCase):
                         CallStmt(Id('io'), Id('writeFloatLn'), [CallExpr(Id('s'), Id("getArea"), [])]),
                         Assign(Id('s'), NewExpr(Id('Triangle'), [IntLiteral(3), IntLiteral(4)])),
                         CallStmt(Id('io'), Id('writeFloatLn'), [CallExpr(Id('s'), Id("getArea"), [])]),
-                        Assign(Id('a'), Id('b')),
                         Assign(Id('b'), IntLiteral(3)),
+                        Assign(Id('a'), Id('b')),
                     ]
                 ))
             ]),

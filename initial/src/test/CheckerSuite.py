@@ -131,25 +131,70 @@ class CheckerSuite(unittest.TestCase):
     #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
     #     CheckerSuite.num += 1
 
-    def test_assign_01(self):
+    # def test_assign_01(self):
+    #     input = """class main {
+    #         int foo() {
+    #             int a;
+    #             a := 3.0;
+    #         }
+    #     }"""
+    #     expect = "Type Mismatch In Statement: AssignStmt(Id(a),FloatLit(3.0))"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
+    
+    # def test_assign_const(self):
+    #     input = """class main {
+    #         int foo() {
+    #             final int a := 3;
+    #             a := 5;
+    #         }
+    #     }"""
+    #     expect = "Cannot Assign To Constant: AssignStmt(Id(a),IntLit(5))"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
+    
+    # def test_assign_miss_type(self):
+    #     input = """class main {
+    #         int foo() {
+    #             int a;
+    #             a := 5.0;
+    #         }
+    #     }"""
+    #     expect = "Type Mismatch In Statement: AssignStmt(Id(a),FloatLit(5.0))"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
+
+    # def test_assign_type_mismatch_02(self):
+    #     input = """class main {
+    #         int foo() {
+    #             string a;
+    #             a := 3;
+    #         }
+    #     }"""
+    #     expect = "Type Mismatch In Statement: AssignStmt(Id(a),IntLit(3))"
+    #     self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+    #     CheckerSuite.num += 1
+    
+    def test_multi_assign(self):
+        input = """class main {
+            int foo() {
+                int a, b;
+                a := b := 3.0;
+            }
+        }"""
+        expect = "Type Mismatch In Statement: AssignStmt(Id(b),FloatLit(3.0))"
+        self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
+        CheckerSuite.num += 1
+
+    def test_multi_assign_02(self):
         input = """class main {
             int foo() {
                 int a;
-                a := 3.0;
+                float b;
+                a := b := 3.0;
             }
         }"""
-        expect = "Type Mismatch In Statement: AssignStmt(Id(a),FloatLit(3.0))"
-        self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
-        CheckerSuite.num += 1
-    
-    def test_assign_const(self):
-        input = """class main {
-            int foo() {
-                final int a := 3;
-                a := 5;
-            }
-        }"""
-        expect = "Cannot Assign To Constant: AssignStmt(Id(a),IntLit(5))"
+        expect = "Type Mismatch In Statement: AssignStmt(Id(a),Id(b))"
         self.assertTrue(TestChecker.test(input,expect,CheckerSuite.num))
         CheckerSuite.num += 1
 

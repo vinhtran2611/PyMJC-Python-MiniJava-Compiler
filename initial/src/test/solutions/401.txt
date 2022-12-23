@@ -1,1 +1,1 @@
-Cannot Assign To Constant: AssignStmt(Id(a),IntLit(5))
+Type Mismatch In Statement: AssignStmt(Id(a),Id(b))

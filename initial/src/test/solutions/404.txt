@@ -1,1 +1,1 @@
-Redeclared Variable: a
+Type Mismatch In Statement: AssignStmt(Id(a),Id(b))

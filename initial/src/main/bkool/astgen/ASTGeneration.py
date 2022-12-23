@@ -160,7 +160,7 @@ class ASTGeneration(BKOOLVisitor):
         asl += [Assign(ids[-1], exp)]
         if len(asl) == 1:
             return asl[0]
-        return asl
+        return asl[::-1]
     
     # Visit a parse tree produced by BKOOLParser#if_stmt.
     def visitIf_stmt(self, ctx:BKOOLParser.If_stmtContext):

@@ -1,7 +1,6 @@
 class main {
-            void a () {
-                int a;
-                int a;
+            int foo() {
+                int a, b;
+                a := b := 3;
             }
         }
-        

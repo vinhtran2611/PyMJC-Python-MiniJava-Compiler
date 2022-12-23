@@ -1,1 +1,1 @@
-Type Mismatch In Statement: AssignStmt(Id(a),FloatLit(3.0))
+Type Mismatch In Statement: AssignStmt(Id(b),FloatLit(3.0))

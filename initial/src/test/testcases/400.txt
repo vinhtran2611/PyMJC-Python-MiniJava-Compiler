@@ -1,6 +1,6 @@
 class main {
             int foo() {
-                int a;
-                a := 3.0;
+                int a, b;
+                a := b := 3.0;
             }
         }
