@@ -1,1 +1,1 @@
-Type Mismatch In Statement: AssignStmt(Id(a),IntLit(3))
+Undeclared Class: b

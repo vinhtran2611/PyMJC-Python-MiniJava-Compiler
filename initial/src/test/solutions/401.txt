@@ -1,1 +1,1 @@
-Type Mismatch In Statement: VarDecl(Id(cv),FloatType,BinaryOp(+,FieldAccess(Id(a),Id(x)),FieldAccess(Id(a),Id(y))))
+Undeclared Attribute: z

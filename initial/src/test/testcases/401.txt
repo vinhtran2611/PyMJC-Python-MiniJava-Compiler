@@ -10,7 +10,7 @@
             int area(){
                 HCN a;
                 a.z := 3;
-                float cv := a.x + a.y;
+                int cv := a.x + a.y;
             }
         }
         

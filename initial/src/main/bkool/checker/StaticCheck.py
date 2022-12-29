@@ -1,7 +1,7 @@
 from AST import *
 
 # from Visitor import *
-from Utils import Utils
+# from Utils import Utils
 from StaticError import *
 from Visitor import BaseVisitor
 
@@ -143,10 +143,15 @@ class StaticChecker(BaseVisitor):
         # classname : Id
         # memlist : List[MemDecl]
         # parentname : Id = None # None if there is no parent
+        if ast.parentname is not None:
+            if ast.parentname.name not in o:
+                raise Undeclared(Class(), ast.parentname.name)
+                
         class_env = {
             'global': o,
             'current_class': ast.classname.name,
         }
+
         for mem in ast.memlist:
             self.visit(mem, class_env)
 
@@ -158,7 +163,8 @@ class StaticChecker(BaseVisitor):
         # body: Block
         method_env = {
             'global': class_env['global'],
-            'current_class': class_env['current_class'],
+            'current_class': class_env['current_class'], #class name
+            'name': ast.name.name,
             'local': {},
         }
         for parameter in ast.param:
@@ -185,14 +191,13 @@ class StaticChecker(BaseVisitor):
         if type(ast.constType) is FloatType and type(value_typ) not in [FloatType, IntType]:
             raise TypeMismatchInStatement(ast)
         elif type(ast.constType) != value_typ:
-            raise TypeMismatchInStatement(ast)
+            raise TypeMismatchInConstant(ast)
         
     def visitVarDecl(self, ast, env):
         # variable : Id
         # varType : Type
         # varInit : Expr = None # None if there is no initial
-        print(f"Vardecl: {ast}")
-        
+        # print(f"Vardecl: {ast}")
 
         if isinstance(ast.varType, ClassType):
             if ast.varType.classname.name not in env["global"]:
@@ -204,11 +209,6 @@ class StaticChecker(BaseVisitor):
             if type(ast.varType) is FloatType and value_typ not in [FloatType, IntType]:
                 raise TypeMismatchInStatement(ast)
             elif type(ast.varType) != value_typ:
-                print(f'Error')
-                print(type(ast.varInit))
-                print(f"value_typ: {value_typ}")
-                print(type(ast.varType), value_typ)
-                
                 raise TypeMismatchInStatement(ast)
         if "local" in env:
             if ast.variable.name in env["local"]:
@@ -231,11 +231,23 @@ class StaticChecker(BaseVisitor):
         for stmt in ast.stmt:
             self.visit(stmt, method_env) 
 
+    def visitIf(self, ast, method_env):
+        # class If(Stmt):
+        # expr:Expr
+        # thenStmt:Stmt
+        # elseStmt:Stmt = None # None if there is no else branch
+        expr = self.visit(ast.expr, method_env)
+        if type(expr) != BoolType:
+            raise TypeMismatchInStatement(ast)
+        self.visit(ast.thenStmt)
+        if ast.elseStmt:
+            self.visit(ast.elseStmt)
+
     def visitBinaryOp(self, ast, method_env):
         # op:str
         # left:Expr
         # right:Expr
-        print(f"visitBinaryOp: {ast}")
+        # print(f"visitBinaryOp: {ast}")
 
         l = self.visit(ast.left, method_env)
         r = self.visit(ast.right, method_env)
@@ -245,7 +257,6 @@ class StaticChecker(BaseVisitor):
         if isinstance(r, Id):
             if r is None:
                 raise Undeclared(Identifier(), ast.right.name)
-        print(l, r)
 
         if ast.op in ["+", "-", "*", "/", "<", "<=", ">", ">="]:
             if intersection([l, r], [BoolType, StringType]):
@@ -254,8 +265,7 @@ class StaticChecker(BaseVisitor):
                 return FloatType
             elif type(l) == IntType and type(r) == IntType:
                 return IntType
-            print(f"left: {ast.left}, right: {ast.right}")
-            print(l, r)
+
             return FloatType
         elif ast.op in ["\\", "%"]:
             if intersection([l, r], [FloatType, BoolType, StringType]):
@@ -294,7 +304,7 @@ class StaticChecker(BaseVisitor):
     def visitAssign(self, ast, method_env):
         # lhs:Expr
         # exp:Expr
-        print(f"Assign: {ast}")
+        # print(f"Assign: {ast}")
 
         exp = self.visit(ast.exp, method_env)
         lhs = self.visit(ast.lhs, method_env)
@@ -316,8 +326,7 @@ class StaticChecker(BaseVisitor):
     def visitFieldAccess(self, ast, o):
         # obj:Expr
         # fieldname:Id
-
-        print(f"visitFieldAccess: {ast}")
+        # print(f"visitFieldAccess: {ast}")
 
         obj_data = self.visit(ast.obj, o) # Symbol
         
@@ -340,8 +349,7 @@ class StaticChecker(BaseVisitor):
             if class_store['parent'] is None:
                 break
             class_name = class_store['parent']
-        raise Undeclared(Attribute(), ast.fieldname.name)
-        
+        raise Undeclared(Attribute(), ast.fieldname.name)  
 
     def visitId(self, ast, method_env):
         # class Id(LHS):

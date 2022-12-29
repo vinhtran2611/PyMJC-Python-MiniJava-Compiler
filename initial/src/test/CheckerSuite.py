@@ -5,6 +5,42 @@ from AST import *
 
 class CheckerSuite(unittest.TestCase):  
     num = 400
+    def test_parent(self):
+        input = """class a extends b {}
+        """
+        expect = "Undeclared Class: b"
+        self.assertTrue(TestChecker.test(input, expect, CheckerSuite.num))
+        CheckerSuite.num += 1
+
+    num = 400
+    def test_const_decl(self):
+        input = """class Ex{
+            final int x = 10.0;
+        }
+        """
+        expect = "Type Mismatch In Constant Declaration: ConstDecl(Id(x),IntType,FloatLit(10.0))"
+        self.assertTrue(TestChecker.test(input, expect, CheckerSuite.num))
+        CheckerSuite.num += 1
+
+    def test_const_expr(self):
+        input = """class Ex{
+            static int a;
+            final int x  = Ex.a;
+        }
+        """
+        expect = "Illegal Constant Expression: FieldAccess(Id(Ex),Id(a))"
+        self.assertTrue(TestChecker.test(input, expect, CheckerSuite.num))
+        CheckerSuite.num += 1
+
+    # Program([
+    #     ClassDecl(Id("Ex"),[
+    #         AttributeDecl(Static(),VarDecl(Id("a"),IntType())),
+    #         AttributeDecl(Instance(),ConstDecl(Id("x"),IntType(),FieldAccess(Id("Ex"),Id("a"))))])])
+
+
+    # Program([ClassDecl(Id("Ex"),[AttributeDecl(Instance(),ConstDecl(Id("x"),IntType(),FloatLiteral(10.0)))])])
+
+    
     # def test_redeclare_class(self):
     #     input = """class main {}
     #     class main {}"""

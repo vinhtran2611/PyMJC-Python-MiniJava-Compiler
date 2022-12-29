@@ -1,6 +1,2 @@
-class main {
-            int foo() {
-                string a;
-                a := 3;
-            }
-        }
+class a extends b {}
+        

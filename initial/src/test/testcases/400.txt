@@ -1,16 +1,4 @@
-
-        class HCN {
-            int x;
-            int y;
-            int funcA(){
-                return 1;
-            }
-        }
-        class main {
-            int area(){
-                HCN a;
-                a.z := 3;
-                int cv := a.x + a.y;
-            }
+class Ex{
+            final int x = 10.0;
         }
         
