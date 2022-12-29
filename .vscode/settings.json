@@ -1,7 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "./initial/src/main/bkool/utils",
-        "./initial/target",
-        "./initial/src/test"
-    ]
-}
