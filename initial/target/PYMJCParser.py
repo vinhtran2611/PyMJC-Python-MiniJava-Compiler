@@ -1,4 +1,4 @@
-# Generated from c:\Users\tranq\workspace\HK221\PPL\Assignment\assignment3\initial\src\main\bkool\parser\BKOOL.g4 by ANTLR 4.9.2
+# Generated from main/pymjc/parser/PYMJC.g4 by ANTLR 4.9.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -171,9 +171,9 @@ def serializedATN():
         return buf.getvalue()
 
 
-class BKOOLParser ( Parser ):
+class PYMJCParser ( Parser ):
 
-    grammarFileName = "BKOOL.g4"
+    grammarFileName = "PYMJC.g4"
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -316,24 +316,30 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def EOF(self):
-            return self.getToken(BKOOLParser.EOF, 0)
+            return self.getToken(PYMJCParser.EOF, 0)
 
         def class_decl(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.Class_declContext)
+                return self.getTypedRuleContexts(PYMJCParser.Class_declContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.Class_declContext,i)
+                return self.getTypedRuleContext(PYMJCParser.Class_declContext,i)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_program
+            return PYMJCParser.RULE_program
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProgram" ):
+                return visitor.visitProgram(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def program(self):
 
-        localctx = BKOOLParser.ProgramContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.ProgramContext(self, self._ctx, self.state)
         self.enterRule(localctx, 0, self.RULE_program)
         self._la = 0 # Token type
         try:
@@ -347,11 +353,11 @@ class BKOOLParser ( Parser ):
                 self.state = 51 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==BKOOLParser.CLASS):
+                if not (_la==PYMJCParser.CLASS):
                     break
 
             self.state = 53
-            self.match(BKOOLParser.EOF)
+            self.match(PYMJCParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -369,63 +375,69 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def CLASS(self):
-            return self.getToken(BKOOLParser.CLASS, 0)
+            return self.getToken(PYMJCParser.CLASS, 0)
 
         def ID(self, i:int=None):
             if i is None:
-                return self.getTokens(BKOOLParser.ID)
+                return self.getTokens(PYMJCParser.ID)
             else:
-                return self.getToken(BKOOLParser.ID, i)
+                return self.getToken(PYMJCParser.ID, i)
 
         def LP(self):
-            return self.getToken(BKOOLParser.LP, 0)
+            return self.getToken(PYMJCParser.LP, 0)
 
         def RP(self):
-            return self.getToken(BKOOLParser.RP, 0)
+            return self.getToken(PYMJCParser.RP, 0)
 
         def EXTENDS(self):
-            return self.getToken(BKOOLParser.EXTENDS, 0)
+            return self.getToken(PYMJCParser.EXTENDS, 0)
 
         def member(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.MemberContext)
+                return self.getTypedRuleContexts(PYMJCParser.MemberContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.MemberContext,i)
+                return self.getTypedRuleContext(PYMJCParser.MemberContext,i)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_class_decl
+            return PYMJCParser.RULE_class_decl
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClass_decl" ):
+                return visitor.visitClass_decl(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def class_decl(self):
 
-        localctx = BKOOLParser.Class_declContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.Class_declContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_class_decl)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 55
-            self.match(BKOOLParser.CLASS)
+            self.match(PYMJCParser.CLASS)
             self.state = 56
-            self.match(BKOOLParser.ID)
+            self.match(PYMJCParser.ID)
             self.state = 59
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==BKOOLParser.EXTENDS:
+            if _la==PYMJCParser.EXTENDS:
                 self.state = 57
-                self.match(BKOOLParser.EXTENDS)
+                self.match(PYMJCParser.EXTENDS)
                 self.state = 58
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
 
 
             self.state = 61
-            self.match(BKOOLParser.LP)
+            self.match(PYMJCParser.LP)
             self.state = 65
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.BOOLEAN) | (1 << BKOOLParser.INT) | (1 << BKOOLParser.FLOAT) | (1 << BKOOLParser.STRING) | (1 << BKOOLParser.VOID) | (1 << BKOOLParser.FINAL) | (1 << BKOOLParser.STATIC) | (1 << BKOOLParser.ID))) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.BOOLEAN) | (1 << PYMJCParser.INT) | (1 << PYMJCParser.FLOAT) | (1 << PYMJCParser.STRING) | (1 << PYMJCParser.VOID) | (1 << PYMJCParser.FINAL) | (1 << PYMJCParser.STATIC) | (1 << PYMJCParser.ID))) != 0):
                 self.state = 62
                 self.member()
                 self.state = 67
@@ -433,7 +445,7 @@ class BKOOLParser ( Parser ):
                 _la = self._input.LA(1)
 
             self.state = 68
-            self.match(BKOOLParser.RP)
+            self.match(PYMJCParser.RP)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -451,22 +463,28 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def attribute_decl(self):
-            return self.getTypedRuleContext(BKOOLParser.Attribute_declContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Attribute_declContext,0)
 
 
         def method_decl(self):
-            return self.getTypedRuleContext(BKOOLParser.Method_declContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Method_declContext,0)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_member
+            return PYMJCParser.RULE_member
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMember" ):
+                return visitor.visitMember(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def member(self):
 
-        localctx = BKOOLParser.MemberContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.MemberContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_member)
         try:
             self.state = 72
@@ -502,22 +520,28 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def mutable(self):
-            return self.getTypedRuleContext(BKOOLParser.MutableContext,0)
+            return self.getTypedRuleContext(PYMJCParser.MutableContext,0)
 
 
         def immutable(self):
-            return self.getTypedRuleContext(BKOOLParser.ImmutableContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ImmutableContext,0)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_attribute_decl
+            return PYMJCParser.RULE_attribute_decl
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAttribute_decl" ):
+                return visitor.visitAttribute_decl(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def attribute_decl(self):
 
-        localctx = BKOOLParser.Attribute_declContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.Attribute_declContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_attribute_decl)
         try:
             self.state = 76
@@ -553,27 +577,33 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def var_decl_att(self):
-            return self.getTypedRuleContext(BKOOLParser.Var_decl_attContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Var_decl_attContext,0)
 
 
         def SEMI(self):
-            return self.getToken(BKOOLParser.SEMI, 0)
+            return self.getToken(PYMJCParser.SEMI, 0)
 
         def FINAL(self):
-            return self.getToken(BKOOLParser.FINAL, 0)
+            return self.getToken(PYMJCParser.FINAL, 0)
 
         def STATIC(self):
-            return self.getToken(BKOOLParser.STATIC, 0)
+            return self.getToken(PYMJCParser.STATIC, 0)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_immutable
+            return PYMJCParser.RULE_immutable
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitImmutable" ):
+                return visitor.visitImmutable(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def immutable(self):
 
-        localctx = BKOOLParser.ImmutableContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.ImmutableContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_immutable)
         self._la = 0 # Token type
         try:
@@ -585,24 +615,24 @@ class BKOOLParser ( Parser ):
                 self.state = 79
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==BKOOLParser.STATIC:
+                if _la==PYMJCParser.STATIC:
                     self.state = 78
-                    self.match(BKOOLParser.STATIC)
+                    self.match(PYMJCParser.STATIC)
 
 
                 self.state = 81
-                self.match(BKOOLParser.FINAL)
+                self.match(PYMJCParser.FINAL)
                 pass
 
             elif la_ == 2:
                 self.state = 82
-                self.match(BKOOLParser.FINAL)
+                self.match(PYMJCParser.FINAL)
                 self.state = 84
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==BKOOLParser.STATIC:
+                if _la==PYMJCParser.STATIC:
                     self.state = 83
-                    self.match(BKOOLParser.STATIC)
+                    self.match(PYMJCParser.STATIC)
 
 
                 pass
@@ -611,7 +641,7 @@ class BKOOLParser ( Parser ):
             self.state = 88
             self.var_decl_att()
             self.state = 89
-            self.match(BKOOLParser.SEMI)
+            self.match(PYMJCParser.SEMI)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -629,24 +659,30 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def var_decl_att(self):
-            return self.getTypedRuleContext(BKOOLParser.Var_decl_attContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Var_decl_attContext,0)
 
 
         def SEMI(self):
-            return self.getToken(BKOOLParser.SEMI, 0)
+            return self.getToken(PYMJCParser.SEMI, 0)
 
         def STATIC(self):
-            return self.getToken(BKOOLParser.STATIC, 0)
+            return self.getToken(PYMJCParser.STATIC, 0)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_mutable
+            return PYMJCParser.RULE_mutable
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMutable" ):
+                return visitor.visitMutable(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def mutable(self):
 
-        localctx = BKOOLParser.MutableContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.MutableContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_mutable)
         self._la = 0 # Token type
         try:
@@ -654,15 +690,15 @@ class BKOOLParser ( Parser ):
             self.state = 92
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==BKOOLParser.STATIC:
+            if _la==PYMJCParser.STATIC:
                 self.state = 91
-                self.match(BKOOLParser.STATIC)
+                self.match(PYMJCParser.STATIC)
 
 
             self.state = 94
             self.var_decl_att()
             self.state = 95
-            self.match(BKOOLParser.SEMI)
+            self.match(PYMJCParser.SEMI)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -680,22 +716,28 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def bktype(self):
-            return self.getTypedRuleContext(BKOOLParser.BktypeContext,0)
+            return self.getTypedRuleContext(PYMJCParser.BktypeContext,0)
 
 
         def ids_att(self):
-            return self.getTypedRuleContext(BKOOLParser.Ids_attContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Ids_attContext,0)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_var_decl_att
+            return PYMJCParser.RULE_var_decl_att
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVar_decl_att" ):
+                return visitor.visitVar_decl_att(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def var_decl_att(self):
 
-        localctx = BKOOLParser.Var_decl_attContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.Var_decl_attContext(self, self._ctx, self.state)
         self.enterRule(localctx, 12, self.RULE_var_decl_att)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -720,25 +762,31 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def bktype(self):
-            return self.getTypedRuleContext(BKOOLParser.BktypeContext,0)
+            return self.getTypedRuleContext(PYMJCParser.BktypeContext,0)
 
 
         def listID(self):
-            return self.getTypedRuleContext(BKOOLParser.ListIDContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ListIDContext,0)
 
 
         def FINAL(self):
-            return self.getToken(BKOOLParser.FINAL, 0)
+            return self.getToken(PYMJCParser.FINAL, 0)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_var_decl
+            return PYMJCParser.RULE_var_decl
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVar_decl" ):
+                return visitor.visitVar_decl(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def var_decl(self):
 
-        localctx = BKOOLParser.Var_declContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.Var_declContext(self, self._ctx, self.state)
         self.enterRule(localctx, 14, self.RULE_var_decl)
         self._la = 0 # Token type
         try:
@@ -746,9 +794,9 @@ class BKOOLParser ( Parser ):
             self.state = 101
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==BKOOLParser.FINAL:
+            if _la==PYMJCParser.FINAL:
                 self.state = 100
-                self.match(BKOOLParser.FINAL)
+                self.match(PYMJCParser.FINAL)
 
 
             self.state = 103
@@ -772,38 +820,44 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def bktype(self):
-            return self.getTypedRuleContext(BKOOLParser.BktypeContext,0)
+            return self.getTypedRuleContext(PYMJCParser.BktypeContext,0)
 
 
         def ID(self):
-            return self.getToken(BKOOLParser.ID, 0)
+            return self.getToken(PYMJCParser.ID, 0)
 
         def LB(self):
-            return self.getToken(BKOOLParser.LB, 0)
+            return self.getToken(PYMJCParser.LB, 0)
 
         def params(self):
-            return self.getTypedRuleContext(BKOOLParser.ParamsContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ParamsContext,0)
 
 
         def RB(self):
-            return self.getToken(BKOOLParser.RB, 0)
+            return self.getToken(PYMJCParser.RB, 0)
 
         def STATIC(self):
-            return self.getToken(BKOOLParser.STATIC, 0)
+            return self.getToken(PYMJCParser.STATIC, 0)
 
         def block_stmt(self):
-            return self.getTypedRuleContext(BKOOLParser.Block_stmtContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Block_stmtContext,0)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_method_decl
+            return PYMJCParser.RULE_method_decl
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethod_decl" ):
+                return visitor.visitMethod_decl(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def method_decl(self):
 
-        localctx = BKOOLParser.Method_declContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.Method_declContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_method_decl)
         self._la = 0 # Token type
         try:
@@ -815,25 +869,25 @@ class BKOOLParser ( Parser ):
                 self.state = 107
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==BKOOLParser.STATIC:
+                if _la==PYMJCParser.STATIC:
                     self.state = 106
-                    self.match(BKOOLParser.STATIC)
+                    self.match(PYMJCParser.STATIC)
 
 
                 self.state = 109
                 self.bktype()
                 self.state = 110
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
                 self.state = 111
-                self.match(BKOOLParser.LB)
+                self.match(PYMJCParser.LB)
                 self.state = 112
                 self.params()
                 self.state = 113
-                self.match(BKOOLParser.RB)
+                self.match(PYMJCParser.RB)
                 self.state = 115
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==BKOOLParser.LP:
+                if _la==PYMJCParser.LP:
                     self.state = 114
                     self.block_stmt()
 
@@ -843,17 +897,17 @@ class BKOOLParser ( Parser ):
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 117
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
                 self.state = 118
-                self.match(BKOOLParser.LB)
+                self.match(PYMJCParser.LB)
                 self.state = 119
                 self.params()
                 self.state = 120
-                self.match(BKOOLParser.RB)
+                self.match(PYMJCParser.RB)
                 self.state = 122
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==BKOOLParser.LP:
+                if _la==PYMJCParser.LP:
                     self.state = 121
                     self.block_stmt()
 
@@ -879,26 +933,32 @@ class BKOOLParser ( Parser ):
 
         def var_decl(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.Var_declContext)
+                return self.getTypedRuleContexts(PYMJCParser.Var_declContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.Var_declContext,i)
+                return self.getTypedRuleContext(PYMJCParser.Var_declContext,i)
 
 
         def SEMI(self, i:int=None):
             if i is None:
-                return self.getTokens(BKOOLParser.SEMI)
+                return self.getTokens(PYMJCParser.SEMI)
             else:
-                return self.getToken(BKOOLParser.SEMI, i)
+                return self.getToken(PYMJCParser.SEMI, i)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_params
+            return PYMJCParser.RULE_params
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitParams" ):
+                return visitor.visitParams(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def params(self):
 
-        localctx = BKOOLParser.ParamsContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.ParamsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 18, self.RULE_params)
         self._la = 0 # Token type
         try:
@@ -906,15 +966,15 @@ class BKOOLParser ( Parser ):
             self.state = 134
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.BOOLEAN) | (1 << BKOOLParser.INT) | (1 << BKOOLParser.FLOAT) | (1 << BKOOLParser.STRING) | (1 << BKOOLParser.VOID) | (1 << BKOOLParser.FINAL) | (1 << BKOOLParser.ID))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.BOOLEAN) | (1 << PYMJCParser.INT) | (1 << PYMJCParser.FLOAT) | (1 << PYMJCParser.STRING) | (1 << PYMJCParser.VOID) | (1 << PYMJCParser.FINAL) | (1 << PYMJCParser.ID))) != 0):
                 self.state = 126
                 self.var_decl()
                 self.state = 131
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while _la==BKOOLParser.SEMI:
+                while _la==PYMJCParser.SEMI:
                     self.state = 127
-                    self.match(BKOOLParser.SEMI)
+                    self.match(PYMJCParser.SEMI)
                     self.state = 128
                     self.var_decl()
                     self.state = 133
@@ -940,58 +1000,64 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def FOR(self):
-            return self.getToken(BKOOLParser.FOR, 0)
+            return self.getToken(PYMJCParser.FOR, 0)
 
         def ID(self):
-            return self.getToken(BKOOLParser.ID, 0)
+            return self.getToken(PYMJCParser.ID, 0)
 
         def ASSIGN(self):
-            return self.getToken(BKOOLParser.ASSIGN, 0)
+            return self.getToken(PYMJCParser.ASSIGN, 0)
 
         def exp(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.ExpContext)
+                return self.getTypedRuleContexts(PYMJCParser.ExpContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.ExpContext,i)
+                return self.getTypedRuleContext(PYMJCParser.ExpContext,i)
 
 
         def DO(self):
-            return self.getToken(BKOOLParser.DO, 0)
+            return self.getToken(PYMJCParser.DO, 0)
 
         def stmt(self):
-            return self.getTypedRuleContext(BKOOLParser.StmtContext,0)
+            return self.getTypedRuleContext(PYMJCParser.StmtContext,0)
 
 
         def TO(self):
-            return self.getToken(BKOOLParser.TO, 0)
+            return self.getToken(PYMJCParser.TO, 0)
 
         def DOWNTO(self):
-            return self.getToken(BKOOLParser.DOWNTO, 0)
+            return self.getToken(PYMJCParser.DOWNTO, 0)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_for_stmt
+            return PYMJCParser.RULE_for_stmt
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFor_stmt" ):
+                return visitor.visitFor_stmt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def for_stmt(self):
 
-        localctx = BKOOLParser.For_stmtContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.For_stmtContext(self, self._ctx, self.state)
         self.enterRule(localctx, 20, self.RULE_for_stmt)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 136
-            self.match(BKOOLParser.FOR)
+            self.match(PYMJCParser.FOR)
             self.state = 137
-            self.match(BKOOLParser.ID)
+            self.match(PYMJCParser.ID)
             self.state = 138
-            self.match(BKOOLParser.ASSIGN)
+            self.match(PYMJCParser.ASSIGN)
             self.state = 139
             self.exp(0)
             self.state = 140
             _la = self._input.LA(1)
-            if not(_la==BKOOLParser.TO or _la==BKOOLParser.DOWNTO):
+            if not(_la==PYMJCParser.TO or _la==PYMJCParser.DOWNTO):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -999,7 +1065,7 @@ class BKOOLParser ( Parser ):
             self.state = 141
             self.exp(0)
             self.state = 142
-            self.match(BKOOLParser.DO)
+            self.match(PYMJCParser.DO)
             self.state = 143
             self.stmt()
         except RecognitionException as re:
@@ -1019,31 +1085,37 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def exp(self):
-            return self.getTypedRuleContext(BKOOLParser.ExpContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ExpContext,0)
 
 
         def lhs(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.LhsContext)
+                return self.getTypedRuleContexts(PYMJCParser.LhsContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.LhsContext,i)
+                return self.getTypedRuleContext(PYMJCParser.LhsContext,i)
 
 
         def ASSIGN(self, i:int=None):
             if i is None:
-                return self.getTokens(BKOOLParser.ASSIGN)
+                return self.getTokens(PYMJCParser.ASSIGN)
             else:
-                return self.getToken(BKOOLParser.ASSIGN, i)
+                return self.getToken(PYMJCParser.ASSIGN, i)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_assign_stmt
+            return PYMJCParser.RULE_assign_stmt
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssign_stmt" ):
+                return visitor.visitAssign_stmt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def assign_stmt(self):
 
-        localctx = BKOOLParser.Assign_stmtContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.Assign_stmtContext(self, self._ctx, self.state)
         self.enterRule(localctx, 22, self.RULE_assign_stmt)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -1055,7 +1127,7 @@ class BKOOLParser ( Parser ):
                     self.state = 145
                     self.lhs()
                     self.state = 146
-                    self.match(BKOOLParser.ASSIGN)
+                    self.match(PYMJCParser.ASSIGN)
 
                 else:
                     raise NoViableAltException(self)
@@ -1082,43 +1154,49 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def IF(self):
-            return self.getToken(BKOOLParser.IF, 0)
+            return self.getToken(PYMJCParser.IF, 0)
 
         def exp(self):
-            return self.getTypedRuleContext(BKOOLParser.ExpContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ExpContext,0)
 
 
         def THEN(self):
-            return self.getToken(BKOOLParser.THEN, 0)
+            return self.getToken(PYMJCParser.THEN, 0)
 
         def stmt(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.StmtContext)
+                return self.getTypedRuleContexts(PYMJCParser.StmtContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.StmtContext,i)
+                return self.getTypedRuleContext(PYMJCParser.StmtContext,i)
 
 
         def ELSE(self):
-            return self.getToken(BKOOLParser.ELSE, 0)
+            return self.getToken(PYMJCParser.ELSE, 0)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_if_stmt
+            return PYMJCParser.RULE_if_stmt
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIf_stmt" ):
+                return visitor.visitIf_stmt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def if_stmt(self):
 
-        localctx = BKOOLParser.If_stmtContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.If_stmtContext(self, self._ctx, self.state)
         self.enterRule(localctx, 24, self.RULE_if_stmt)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 154
-            self.match(BKOOLParser.IF)
+            self.match(PYMJCParser.IF)
             self.state = 155
             self.exp(0)
             self.state = 156
-            self.match(BKOOLParser.THEN)
+            self.match(PYMJCParser.THEN)
             self.state = 157
             self.stmt()
             self.state = 160
@@ -1126,7 +1204,7 @@ class BKOOLParser ( Parser ):
             la_ = self._interp.adaptivePredict(self._input,17,self._ctx)
             if la_ == 1:
                 self.state = 158
-                self.match(BKOOLParser.ELSE)
+                self.match(PYMJCParser.ELSE)
                 self.state = 159
                 self.stmt()
 
@@ -1148,34 +1226,40 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def exp(self):
-            return self.getTypedRuleContext(BKOOLParser.ExpContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ExpContext,0)
 
 
         def DOT(self):
-            return self.getToken(BKOOLParser.DOT, 0)
+            return self.getToken(PYMJCParser.DOT, 0)
 
         def ID(self):
-            return self.getToken(BKOOLParser.ID, 0)
+            return self.getToken(PYMJCParser.ID, 0)
 
         def LB(self):
-            return self.getToken(BKOOLParser.LB, 0)
+            return self.getToken(PYMJCParser.LB, 0)
 
         def RB(self):
-            return self.getToken(BKOOLParser.RB, 0)
+            return self.getToken(PYMJCParser.RB, 0)
 
         def list_exp(self):
-            return self.getTypedRuleContext(BKOOLParser.List_expContext,0)
+            return self.getTypedRuleContext(PYMJCParser.List_expContext,0)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_method_invocation
+            return PYMJCParser.RULE_method_invocation
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethod_invocation" ):
+                return visitor.visitMethod_invocation(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def method_invocation(self):
 
-        localctx = BKOOLParser.Method_invocationContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.Method_invocationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 26, self.RULE_method_invocation)
         self._la = 0 # Token type
         try:
@@ -1183,21 +1267,21 @@ class BKOOLParser ( Parser ):
             self.state = 162
             self.exp(0)
             self.state = 163
-            self.match(BKOOLParser.DOT)
+            self.match(PYMJCParser.DOT)
             self.state = 164
-            self.match(BKOOLParser.ID)
+            self.match(PYMJCParser.ID)
             self.state = 165
-            self.match(BKOOLParser.LB)
+            self.match(PYMJCParser.LB)
             self.state = 167
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.ADD) | (1 << BKOOLParser.SUB) | (1 << BKOOLParser.NOT) | (1 << BKOOLParser.LB) | (1 << BKOOLParser.LP) | (1 << BKOOLParser.INT_LIT) | (1 << BKOOLParser.FLOAT_LIT) | (1 << BKOOLParser.BOOL_LIT) | (1 << BKOOLParser.STR_LIT) | (1 << BKOOLParser.NEW) | (1 << BKOOLParser.THIS) | (1 << BKOOLParser.ID))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.ADD) | (1 << PYMJCParser.SUB) | (1 << PYMJCParser.NOT) | (1 << PYMJCParser.LB) | (1 << PYMJCParser.LP) | (1 << PYMJCParser.INT_LIT) | (1 << PYMJCParser.FLOAT_LIT) | (1 << PYMJCParser.BOOL_LIT) | (1 << PYMJCParser.STR_LIT) | (1 << PYMJCParser.NEW) | (1 << PYMJCParser.THIS) | (1 << PYMJCParser.ID))) != 0):
                 self.state = 166
                 self.list_exp()
 
 
             self.state = 169
-            self.match(BKOOLParser.RB)
+            self.match(PYMJCParser.RB)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1215,25 +1299,31 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def exp(self):
-            return self.getTypedRuleContext(BKOOLParser.ExpContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ExpContext,0)
 
 
         def CM(self):
-            return self.getToken(BKOOLParser.CM, 0)
+            return self.getToken(PYMJCParser.CM, 0)
 
         def list_exp(self):
-            return self.getTypedRuleContext(BKOOLParser.List_expContext,0)
+            return self.getTypedRuleContext(PYMJCParser.List_expContext,0)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_list_exp
+            return PYMJCParser.RULE_list_exp
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitList_exp" ):
+                return visitor.visitList_exp(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def list_exp(self):
 
-        localctx = BKOOLParser.List_expContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.List_expContext(self, self._ctx, self.state)
         self.enterRule(localctx, 28, self.RULE_list_exp)
         try:
             self.state = 176
@@ -1244,7 +1334,7 @@ class BKOOLParser ( Parser ):
                 self.state = 171
                 self.exp(0)
                 self.state = 172
-                self.match(BKOOLParser.CM)
+                self.match(PYMJCParser.CM)
                 self.state = 173
                 self.list_exp()
                 pass
@@ -1273,50 +1363,56 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def LP(self):
-            return self.getToken(BKOOLParser.LP, 0)
+            return self.getToken(PYMJCParser.LP, 0)
 
         def RP(self):
-            return self.getToken(BKOOLParser.RP, 0)
+            return self.getToken(PYMJCParser.RP, 0)
 
         def stmt(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.StmtContext)
+                return self.getTypedRuleContexts(PYMJCParser.StmtContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.StmtContext,i)
+                return self.getTypedRuleContext(PYMJCParser.StmtContext,i)
 
 
         def var_decl(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.Var_declContext)
+                return self.getTypedRuleContexts(PYMJCParser.Var_declContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.Var_declContext,i)
+                return self.getTypedRuleContext(PYMJCParser.Var_declContext,i)
 
 
         def SEMI(self, i:int=None):
             if i is None:
-                return self.getTokens(BKOOLParser.SEMI)
+                return self.getTokens(PYMJCParser.SEMI)
             else:
-                return self.getToken(BKOOLParser.SEMI, i)
+                return self.getToken(PYMJCParser.SEMI, i)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_block_stmt
+            return PYMJCParser.RULE_block_stmt
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBlock_stmt" ):
+                return visitor.visitBlock_stmt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def block_stmt(self):
 
-        localctx = BKOOLParser.Block_stmtContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.Block_stmtContext(self, self._ctx, self.state)
         self.enterRule(localctx, 30, self.RULE_block_stmt)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 178
-            self.match(BKOOLParser.LP)
+            self.match(PYMJCParser.LP)
             self.state = 185
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.ADD) | (1 << BKOOLParser.SUB) | (1 << BKOOLParser.NOT) | (1 << BKOOLParser.LB) | (1 << BKOOLParser.LP) | (1 << BKOOLParser.INT_LIT) | (1 << BKOOLParser.FLOAT_LIT) | (1 << BKOOLParser.BOOL_LIT) | (1 << BKOOLParser.STR_LIT) | (1 << BKOOLParser.BOOLEAN) | (1 << BKOOLParser.INT) | (1 << BKOOLParser.FLOAT) | (1 << BKOOLParser.STRING) | (1 << BKOOLParser.VOID) | (1 << BKOOLParser.NEW) | (1 << BKOOLParser.FINAL) | (1 << BKOOLParser.THIS) | (1 << BKOOLParser.BREAK) | (1 << BKOOLParser.CONTINUE) | (1 << BKOOLParser.IF) | (1 << BKOOLParser.FOR) | (1 << BKOOLParser.RETURN) | (1 << BKOOLParser.ID))) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.ADD) | (1 << PYMJCParser.SUB) | (1 << PYMJCParser.NOT) | (1 << PYMJCParser.LB) | (1 << PYMJCParser.LP) | (1 << PYMJCParser.INT_LIT) | (1 << PYMJCParser.FLOAT_LIT) | (1 << PYMJCParser.BOOL_LIT) | (1 << PYMJCParser.STR_LIT) | (1 << PYMJCParser.BOOLEAN) | (1 << PYMJCParser.INT) | (1 << PYMJCParser.FLOAT) | (1 << PYMJCParser.STRING) | (1 << PYMJCParser.VOID) | (1 << PYMJCParser.NEW) | (1 << PYMJCParser.FINAL) | (1 << PYMJCParser.THIS) | (1 << PYMJCParser.BREAK) | (1 << PYMJCParser.CONTINUE) | (1 << PYMJCParser.IF) | (1 << PYMJCParser.FOR) | (1 << PYMJCParser.RETURN) | (1 << PYMJCParser.ID))) != 0):
                 self.state = 183
                 self._errHandler.sync(self)
                 la_ = self._interp.adaptivePredict(self._input,20,self._ctx)
@@ -1329,7 +1425,7 @@ class BKOOLParser ( Parser ):
                     self.state = 180
                     self.var_decl()
                     self.state = 181
-                    self.match(BKOOLParser.SEMI)
+                    self.match(PYMJCParser.SEMI)
                     pass
 
 
@@ -1338,7 +1434,7 @@ class BKOOLParser ( Parser ):
                 _la = self._input.LA(1)
 
             self.state = 188
-            self.match(BKOOLParser.RP)
+            self.match(PYMJCParser.RP)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1356,50 +1452,56 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def block_stmt(self):
-            return self.getTypedRuleContext(BKOOLParser.Block_stmtContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Block_stmtContext,0)
 
 
         def assign_stmt(self):
-            return self.getTypedRuleContext(BKOOLParser.Assign_stmtContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Assign_stmtContext,0)
 
 
         def SEMI(self):
-            return self.getToken(BKOOLParser.SEMI, 0)
+            return self.getToken(PYMJCParser.SEMI, 0)
 
         def if_stmt(self):
-            return self.getTypedRuleContext(BKOOLParser.If_stmtContext,0)
+            return self.getTypedRuleContext(PYMJCParser.If_stmtContext,0)
 
 
         def for_stmt(self):
-            return self.getTypedRuleContext(BKOOLParser.For_stmtContext,0)
+            return self.getTypedRuleContext(PYMJCParser.For_stmtContext,0)
 
 
         def BREAK(self):
-            return self.getToken(BKOOLParser.BREAK, 0)
+            return self.getToken(PYMJCParser.BREAK, 0)
 
         def CONTINUE(self):
-            return self.getToken(BKOOLParser.CONTINUE, 0)
+            return self.getToken(PYMJCParser.CONTINUE, 0)
 
         def RETURN(self):
-            return self.getToken(BKOOLParser.RETURN, 0)
+            return self.getToken(PYMJCParser.RETURN, 0)
 
         def exp(self):
-            return self.getTypedRuleContext(BKOOLParser.ExpContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ExpContext,0)
 
 
         def method_invocation(self):
-            return self.getTypedRuleContext(BKOOLParser.Method_invocationContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Method_invocationContext,0)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_stmt
+            return PYMJCParser.RULE_stmt
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStmt" ):
+                return visitor.visitStmt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def stmt(self):
 
-        localctx = BKOOLParser.StmtContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.StmtContext(self, self._ctx, self.state)
         self.enterRule(localctx, 32, self.RULE_stmt)
         try:
             self.state = 207
@@ -1416,7 +1518,7 @@ class BKOOLParser ( Parser ):
                 self.state = 191
                 self.assign_stmt()
                 self.state = 192
-                self.match(BKOOLParser.SEMI)
+                self.match(PYMJCParser.SEMI)
                 pass
 
             elif la_ == 3:
@@ -1434,27 +1536,27 @@ class BKOOLParser ( Parser ):
             elif la_ == 5:
                 self.enterOuterAlt(localctx, 5)
                 self.state = 196
-                self.match(BKOOLParser.BREAK)
+                self.match(PYMJCParser.BREAK)
                 self.state = 197
-                self.match(BKOOLParser.SEMI)
+                self.match(PYMJCParser.SEMI)
                 pass
 
             elif la_ == 6:
                 self.enterOuterAlt(localctx, 6)
                 self.state = 198
-                self.match(BKOOLParser.CONTINUE)
+                self.match(PYMJCParser.CONTINUE)
                 self.state = 199
-                self.match(BKOOLParser.SEMI)
+                self.match(PYMJCParser.SEMI)
                 pass
 
             elif la_ == 7:
                 self.enterOuterAlt(localctx, 7)
                 self.state = 200
-                self.match(BKOOLParser.RETURN)
+                self.match(PYMJCParser.RETURN)
                 self.state = 201
                 self.exp(0)
                 self.state = 202
-                self.match(BKOOLParser.SEMI)
+                self.match(PYMJCParser.SEMI)
                 pass
 
             elif la_ == 8:
@@ -1462,7 +1564,7 @@ class BKOOLParser ( Parser ):
                 self.state = 204
                 self.method_invocation()
                 self.state = 205
-                self.match(BKOOLParser.SEMI)
+                self.match(PYMJCParser.SEMI)
                 pass
 
 
@@ -1483,105 +1585,111 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def LB(self):
-            return self.getToken(BKOOLParser.LB, 0)
+            return self.getToken(PYMJCParser.LB, 0)
 
         def exp(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.ExpContext)
+                return self.getTypedRuleContexts(PYMJCParser.ExpContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.ExpContext,i)
+                return self.getTypedRuleContext(PYMJCParser.ExpContext,i)
 
 
         def RB(self):
-            return self.getToken(BKOOLParser.RB, 0)
+            return self.getToken(PYMJCParser.RB, 0)
 
         def NEW(self):
-            return self.getToken(BKOOLParser.NEW, 0)
+            return self.getToken(PYMJCParser.NEW, 0)
 
         def ID(self):
-            return self.getToken(BKOOLParser.ID, 0)
+            return self.getToken(PYMJCParser.ID, 0)
 
         def list_exp(self):
-            return self.getTypedRuleContext(BKOOLParser.List_expContext,0)
+            return self.getTypedRuleContext(PYMJCParser.List_expContext,0)
 
 
         def ADD(self):
-            return self.getToken(BKOOLParser.ADD, 0)
+            return self.getToken(PYMJCParser.ADD, 0)
 
         def SUB(self):
-            return self.getToken(BKOOLParser.SUB, 0)
+            return self.getToken(PYMJCParser.SUB, 0)
 
         def NOT(self):
-            return self.getToken(BKOOLParser.NOT, 0)
+            return self.getToken(PYMJCParser.NOT, 0)
 
         def literal(self):
-            return self.getTypedRuleContext(BKOOLParser.LiteralContext,0)
+            return self.getTypedRuleContext(PYMJCParser.LiteralContext,0)
 
 
         def array_lit(self):
-            return self.getTypedRuleContext(BKOOLParser.Array_litContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Array_litContext,0)
 
 
         def THIS(self):
-            return self.getToken(BKOOLParser.THIS, 0)
+            return self.getToken(PYMJCParser.THIS, 0)
 
         def CONCAT(self):
-            return self.getToken(BKOOLParser.CONCAT, 0)
+            return self.getToken(PYMJCParser.CONCAT, 0)
 
         def MUL(self):
-            return self.getToken(BKOOLParser.MUL, 0)
+            return self.getToken(PYMJCParser.MUL, 0)
 
         def DIV(self):
-            return self.getToken(BKOOLParser.DIV, 0)
+            return self.getToken(PYMJCParser.DIV, 0)
 
         def DEV_INT(self):
-            return self.getToken(BKOOLParser.DEV_INT, 0)
+            return self.getToken(PYMJCParser.DEV_INT, 0)
 
         def MOD(self):
-            return self.getToken(BKOOLParser.MOD, 0)
+            return self.getToken(PYMJCParser.MOD, 0)
 
         def AND(self):
-            return self.getToken(BKOOLParser.AND, 0)
+            return self.getToken(PYMJCParser.AND, 0)
 
         def OR(self):
-            return self.getToken(BKOOLParser.OR, 0)
+            return self.getToken(PYMJCParser.OR, 0)
 
         def EQUAL(self):
-            return self.getToken(BKOOLParser.EQUAL, 0)
+            return self.getToken(PYMJCParser.EQUAL, 0)
 
         def NOT_EQUAL(self):
-            return self.getToken(BKOOLParser.NOT_EQUAL, 0)
+            return self.getToken(PYMJCParser.NOT_EQUAL, 0)
 
         def LT(self):
-            return self.getToken(BKOOLParser.LT, 0)
+            return self.getToken(PYMJCParser.LT, 0)
 
         def GT(self):
-            return self.getToken(BKOOLParser.GT, 0)
+            return self.getToken(PYMJCParser.GT, 0)
 
         def LTE(self):
-            return self.getToken(BKOOLParser.LTE, 0)
+            return self.getToken(PYMJCParser.LTE, 0)
 
         def GTE(self):
-            return self.getToken(BKOOLParser.GTE, 0)
+            return self.getToken(PYMJCParser.GTE, 0)
 
         def DOT(self):
-            return self.getToken(BKOOLParser.DOT, 0)
+            return self.getToken(PYMJCParser.DOT, 0)
 
         def LQB(self):
-            return self.getToken(BKOOLParser.LQB, 0)
+            return self.getToken(PYMJCParser.LQB, 0)
 
         def RQR(self):
-            return self.getToken(BKOOLParser.RQR, 0)
+            return self.getToken(PYMJCParser.RQR, 0)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_exp
+            return PYMJCParser.RULE_exp
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExp" ):
+                return visitor.visitExp(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
     def exp(self, _p:int=0):
         _parentctx = self._ctx
         _parentState = self.state
-        localctx = BKOOLParser.ExpContext(self, self._ctx, _parentState)
+        localctx = PYMJCParser.ExpContext(self, self._ctx, _parentState)
         _prevctx = localctx
         _startState = 34
         self.enterRecursionRule(localctx, 34, self.RULE_exp, _p)
@@ -1591,36 +1699,36 @@ class BKOOLParser ( Parser ):
             self.state = 229
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [BKOOLParser.LB]:
+            if token in [PYMJCParser.LB]:
                 self.state = 210
-                self.match(BKOOLParser.LB)
+                self.match(PYMJCParser.LB)
                 self.state = 211
                 self.exp(0)
                 self.state = 212
-                self.match(BKOOLParser.RB)
+                self.match(PYMJCParser.RB)
                 pass
-            elif token in [BKOOLParser.NEW]:
+            elif token in [PYMJCParser.NEW]:
                 self.state = 214
-                self.match(BKOOLParser.NEW)
+                self.match(PYMJCParser.NEW)
                 self.state = 215
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
                 self.state = 216
-                self.match(BKOOLParser.LB)
+                self.match(PYMJCParser.LB)
                 self.state = 218
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.ADD) | (1 << BKOOLParser.SUB) | (1 << BKOOLParser.NOT) | (1 << BKOOLParser.LB) | (1 << BKOOLParser.LP) | (1 << BKOOLParser.INT_LIT) | (1 << BKOOLParser.FLOAT_LIT) | (1 << BKOOLParser.BOOL_LIT) | (1 << BKOOLParser.STR_LIT) | (1 << BKOOLParser.NEW) | (1 << BKOOLParser.THIS) | (1 << BKOOLParser.ID))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.ADD) | (1 << PYMJCParser.SUB) | (1 << PYMJCParser.NOT) | (1 << PYMJCParser.LB) | (1 << PYMJCParser.LP) | (1 << PYMJCParser.INT_LIT) | (1 << PYMJCParser.FLOAT_LIT) | (1 << PYMJCParser.BOOL_LIT) | (1 << PYMJCParser.STR_LIT) | (1 << PYMJCParser.NEW) | (1 << PYMJCParser.THIS) | (1 << PYMJCParser.ID))) != 0):
                     self.state = 217
                     self.list_exp()
 
 
                 self.state = 220
-                self.match(BKOOLParser.RB)
+                self.match(PYMJCParser.RB)
                 pass
-            elif token in [BKOOLParser.ADD, BKOOLParser.SUB]:
+            elif token in [PYMJCParser.ADD, PYMJCParser.SUB]:
                 self.state = 221
                 _la = self._input.LA(1)
-                if not(_la==BKOOLParser.ADD or _la==BKOOLParser.SUB):
+                if not(_la==PYMJCParser.ADD or _la==PYMJCParser.SUB):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -1628,27 +1736,27 @@ class BKOOLParser ( Parser ):
                 self.state = 222
                 self.exp(12)
                 pass
-            elif token in [BKOOLParser.NOT]:
+            elif token in [PYMJCParser.NOT]:
                 self.state = 223
-                self.match(BKOOLParser.NOT)
+                self.match(PYMJCParser.NOT)
                 self.state = 224
                 self.exp(11)
                 pass
-            elif token in [BKOOLParser.ID]:
+            elif token in [PYMJCParser.ID]:
                 self.state = 225
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
                 pass
-            elif token in [BKOOLParser.INT_LIT, BKOOLParser.FLOAT_LIT, BKOOLParser.BOOL_LIT, BKOOLParser.STR_LIT]:
+            elif token in [PYMJCParser.INT_LIT, PYMJCParser.FLOAT_LIT, PYMJCParser.BOOL_LIT, PYMJCParser.STR_LIT]:
                 self.state = 226
                 self.literal()
                 pass
-            elif token in [BKOOLParser.LP]:
+            elif token in [PYMJCParser.LP]:
                 self.state = 227
                 self.array_lit()
                 pass
-            elif token in [BKOOLParser.THIS]:
+            elif token in [PYMJCParser.THIS]:
                 self.state = 228
-                self.match(BKOOLParser.THIS)
+                self.match(PYMJCParser.THIS)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -1666,20 +1774,20 @@ class BKOOLParser ( Parser ):
                     self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(self._input,27,self._ctx)
                     if la_ == 1:
-                        localctx = BKOOLParser.ExpContext(self, _parentctx, _parentState)
+                        localctx = PYMJCParser.ExpContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_exp)
                         self.state = 231
                         if not self.precpred(self._ctx, 10):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
                         self.state = 232
-                        self.match(BKOOLParser.CONCAT)
+                        self.match(PYMJCParser.CONCAT)
                         self.state = 233
                         self.exp(11)
                         pass
 
                     elif la_ == 2:
-                        localctx = BKOOLParser.ExpContext(self, _parentctx, _parentState)
+                        localctx = PYMJCParser.ExpContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_exp)
                         self.state = 234
                         if not self.precpred(self._ctx, 9):
@@ -1687,7 +1795,7 @@ class BKOOLParser ( Parser ):
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 9)")
                         self.state = 235
                         _la = self._input.LA(1)
-                        if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.MUL) | (1 << BKOOLParser.DIV) | (1 << BKOOLParser.DEV_INT) | (1 << BKOOLParser.MOD))) != 0)):
+                        if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.MUL) | (1 << PYMJCParser.DIV) | (1 << PYMJCParser.DEV_INT) | (1 << PYMJCParser.MOD))) != 0)):
                             self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -1697,7 +1805,7 @@ class BKOOLParser ( Parser ):
                         pass
 
                     elif la_ == 3:
-                        localctx = BKOOLParser.ExpContext(self, _parentctx, _parentState)
+                        localctx = PYMJCParser.ExpContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_exp)
                         self.state = 237
                         if not self.precpred(self._ctx, 8):
@@ -1705,7 +1813,7 @@ class BKOOLParser ( Parser ):
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 8)")
                         self.state = 238
                         _la = self._input.LA(1)
-                        if not(_la==BKOOLParser.ADD or _la==BKOOLParser.SUB):
+                        if not(_la==PYMJCParser.ADD or _la==PYMJCParser.SUB):
                             self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -1715,7 +1823,7 @@ class BKOOLParser ( Parser ):
                         pass
 
                     elif la_ == 4:
-                        localctx = BKOOLParser.ExpContext(self, _parentctx, _parentState)
+                        localctx = PYMJCParser.ExpContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_exp)
                         self.state = 240
                         if not self.precpred(self._ctx, 7):
@@ -1723,7 +1831,7 @@ class BKOOLParser ( Parser ):
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 7)")
                         self.state = 241
                         _la = self._input.LA(1)
-                        if not(_la==BKOOLParser.OR or _la==BKOOLParser.AND):
+                        if not(_la==PYMJCParser.OR or _la==PYMJCParser.AND):
                             self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -1733,7 +1841,7 @@ class BKOOLParser ( Parser ):
                         pass
 
                     elif la_ == 5:
-                        localctx = BKOOLParser.ExpContext(self, _parentctx, _parentState)
+                        localctx = PYMJCParser.ExpContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_exp)
                         self.state = 243
                         if not self.precpred(self._ctx, 6):
@@ -1741,7 +1849,7 @@ class BKOOLParser ( Parser ):
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 6)")
                         self.state = 244
                         _la = self._input.LA(1)
-                        if not(_la==BKOOLParser.NOT_EQUAL or _la==BKOOLParser.EQUAL):
+                        if not(_la==PYMJCParser.NOT_EQUAL or _la==PYMJCParser.EQUAL):
                             self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -1751,7 +1859,7 @@ class BKOOLParser ( Parser ):
                         pass
 
                     elif la_ == 6:
-                        localctx = BKOOLParser.ExpContext(self, _parentctx, _parentState)
+                        localctx = PYMJCParser.ExpContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_exp)
                         self.state = 246
                         if not self.precpred(self._ctx, 5):
@@ -1759,7 +1867,7 @@ class BKOOLParser ( Parser ):
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 5)")
                         self.state = 247
                         _la = self._input.LA(1)
-                        if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.LT) | (1 << BKOOLParser.GT) | (1 << BKOOLParser.LTE) | (1 << BKOOLParser.GTE))) != 0)):
+                        if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.LT) | (1 << PYMJCParser.GT) | (1 << PYMJCParser.LTE) | (1 << PYMJCParser.GTE))) != 0)):
                             self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -1769,49 +1877,49 @@ class BKOOLParser ( Parser ):
                         pass
 
                     elif la_ == 7:
-                        localctx = BKOOLParser.ExpContext(self, _parentctx, _parentState)
+                        localctx = PYMJCParser.ExpContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_exp)
                         self.state = 249
                         if not self.precpred(self._ctx, 14):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 14)")
                         self.state = 250
-                        self.match(BKOOLParser.DOT)
+                        self.match(PYMJCParser.DOT)
                         self.state = 251
-                        self.match(BKOOLParser.ID)
+                        self.match(PYMJCParser.ID)
                         self.state = 257
                         self._errHandler.sync(self)
                         la_ = self._interp.adaptivePredict(self._input,26,self._ctx)
                         if la_ == 1:
                             self.state = 252
-                            self.match(BKOOLParser.LB)
+                            self.match(PYMJCParser.LB)
                             self.state = 254
                             self._errHandler.sync(self)
                             _la = self._input.LA(1)
-                            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.ADD) | (1 << BKOOLParser.SUB) | (1 << BKOOLParser.NOT) | (1 << BKOOLParser.LB) | (1 << BKOOLParser.LP) | (1 << BKOOLParser.INT_LIT) | (1 << BKOOLParser.FLOAT_LIT) | (1 << BKOOLParser.BOOL_LIT) | (1 << BKOOLParser.STR_LIT) | (1 << BKOOLParser.NEW) | (1 << BKOOLParser.THIS) | (1 << BKOOLParser.ID))) != 0):
+                            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.ADD) | (1 << PYMJCParser.SUB) | (1 << PYMJCParser.NOT) | (1 << PYMJCParser.LB) | (1 << PYMJCParser.LP) | (1 << PYMJCParser.INT_LIT) | (1 << PYMJCParser.FLOAT_LIT) | (1 << PYMJCParser.BOOL_LIT) | (1 << PYMJCParser.STR_LIT) | (1 << PYMJCParser.NEW) | (1 << PYMJCParser.THIS) | (1 << PYMJCParser.ID))) != 0):
                                 self.state = 253
                                 self.list_exp()
 
 
                             self.state = 256
-                            self.match(BKOOLParser.RB)
+                            self.match(PYMJCParser.RB)
 
 
                         pass
 
                     elif la_ == 8:
-                        localctx = BKOOLParser.ExpContext(self, _parentctx, _parentState)
+                        localctx = PYMJCParser.ExpContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_exp)
                         self.state = 259
                         if not self.precpred(self._ctx, 13):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 13)")
                         self.state = 260
-                        self.match(BKOOLParser.LQB)
+                        self.match(PYMJCParser.LQB)
                         self.state = 261
                         self.exp(0)
                         self.state = 262
-                        self.match(BKOOLParser.RQR)
+                        self.match(PYMJCParser.RQR)
                         pass
 
              
@@ -1836,33 +1944,39 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def ID(self):
-            return self.getToken(BKOOLParser.ID, 0)
+            return self.getToken(PYMJCParser.ID, 0)
 
         def exp(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.ExpContext)
+                return self.getTypedRuleContexts(PYMJCParser.ExpContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.ExpContext,i)
+                return self.getTypedRuleContext(PYMJCParser.ExpContext,i)
 
 
         def DOT(self):
-            return self.getToken(BKOOLParser.DOT, 0)
+            return self.getToken(PYMJCParser.DOT, 0)
 
         def LQB(self):
-            return self.getToken(BKOOLParser.LQB, 0)
+            return self.getToken(PYMJCParser.LQB, 0)
 
         def RQR(self):
-            return self.getToken(BKOOLParser.RQR, 0)
+            return self.getToken(PYMJCParser.RQR, 0)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_lhs
+            return PYMJCParser.RULE_lhs
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLhs" ):
+                return visitor.visitLhs(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def lhs(self):
 
-        localctx = BKOOLParser.LhsContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.LhsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 36, self.RULE_lhs)
         try:
             self.state = 279
@@ -1871,7 +1985,7 @@ class BKOOLParser ( Parser ):
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 269
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
                 pass
 
             elif la_ == 2:
@@ -1879,9 +1993,9 @@ class BKOOLParser ( Parser ):
                 self.state = 270
                 self.exp(0)
                 self.state = 271
-                self.match(BKOOLParser.DOT)
+                self.match(PYMJCParser.DOT)
                 self.state = 272
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
                 pass
 
             elif la_ == 3:
@@ -1889,11 +2003,11 @@ class BKOOLParser ( Parser ):
                 self.state = 274
                 self.exp(0)
                 self.state = 275
-                self.match(BKOOLParser.LQB)
+                self.match(PYMJCParser.LQB)
                 self.state = 276
                 self.exp(0)
                 self.state = 277
-                self.match(BKOOLParser.RQR)
+                self.match(PYMJCParser.RQR)
                 pass
 
 
@@ -1914,33 +2028,39 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def INT_LIT(self):
-            return self.getToken(BKOOLParser.INT_LIT, 0)
+            return self.getToken(PYMJCParser.INT_LIT, 0)
 
         def FLOAT_LIT(self):
-            return self.getToken(BKOOLParser.FLOAT_LIT, 0)
+            return self.getToken(PYMJCParser.FLOAT_LIT, 0)
 
         def STR_LIT(self):
-            return self.getToken(BKOOLParser.STR_LIT, 0)
+            return self.getToken(PYMJCParser.STR_LIT, 0)
 
         def BOOL_LIT(self):
-            return self.getToken(BKOOLParser.BOOL_LIT, 0)
+            return self.getToken(PYMJCParser.BOOL_LIT, 0)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_literal
+            return PYMJCParser.RULE_literal
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLiteral" ):
+                return visitor.visitLiteral(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def literal(self):
 
-        localctx = BKOOLParser.LiteralContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.LiteralContext(self, self._ctx, self.state)
         self.enterRule(localctx, 38, self.RULE_literal)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 281
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.INT_LIT) | (1 << BKOOLParser.FLOAT_LIT) | (1 << BKOOLParser.BOOL_LIT) | (1 << BKOOLParser.STR_LIT))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.INT_LIT) | (1 << PYMJCParser.FLOAT_LIT) | (1 << PYMJCParser.BOOL_LIT) | (1 << PYMJCParser.STR_LIT))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -1962,49 +2082,55 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def INT(self):
-            return self.getToken(BKOOLParser.INT, 0)
+            return self.getToken(PYMJCParser.INT, 0)
 
         def VOID(self):
-            return self.getToken(BKOOLParser.VOID, 0)
+            return self.getToken(PYMJCParser.VOID, 0)
 
         def FLOAT(self):
-            return self.getToken(BKOOLParser.FLOAT, 0)
+            return self.getToken(PYMJCParser.FLOAT, 0)
 
         def STRING(self):
-            return self.getToken(BKOOLParser.STRING, 0)
+            return self.getToken(PYMJCParser.STRING, 0)
 
         def BOOLEAN(self):
-            return self.getToken(BKOOLParser.BOOLEAN, 0)
+            return self.getToken(PYMJCParser.BOOLEAN, 0)
 
         def ID(self):
-            return self.getToken(BKOOLParser.ID, 0)
+            return self.getToken(PYMJCParser.ID, 0)
 
         def LQB(self):
-            return self.getToken(BKOOLParser.LQB, 0)
+            return self.getToken(PYMJCParser.LQB, 0)
 
         def exp(self):
-            return self.getTypedRuleContext(BKOOLParser.ExpContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ExpContext,0)
 
 
         def RQR(self):
-            return self.getToken(BKOOLParser.RQR, 0)
+            return self.getToken(PYMJCParser.RQR, 0)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_bktype
+            return PYMJCParser.RULE_bktype
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBktype" ):
+                return visitor.visitBktype(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def bktype(self):
 
-        localctx = BKOOLParser.BktypeContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.BktypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 40, self.RULE_bktype)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 283
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.BOOLEAN) | (1 << BKOOLParser.INT) | (1 << BKOOLParser.FLOAT) | (1 << BKOOLParser.STRING) | (1 << BKOOLParser.VOID) | (1 << BKOOLParser.ID))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.BOOLEAN) | (1 << PYMJCParser.INT) | (1 << PYMJCParser.FLOAT) | (1 << PYMJCParser.STRING) | (1 << PYMJCParser.VOID) | (1 << PYMJCParser.ID))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -2012,13 +2138,13 @@ class BKOOLParser ( Parser ):
             self.state = 288
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==BKOOLParser.LQB:
+            if _la==PYMJCParser.LQB:
                 self.state = 284
-                self.match(BKOOLParser.LQB)
+                self.match(PYMJCParser.LQB)
                 self.state = 285
                 self.exp(0)
                 self.state = 286
-                self.match(BKOOLParser.RQR)
+                self.match(PYMJCParser.RQR)
 
 
         except RecognitionException as re:
@@ -2038,63 +2164,69 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def LP(self):
-            return self.getToken(BKOOLParser.LP, 0)
+            return self.getToken(PYMJCParser.LP, 0)
 
         def RP(self):
-            return self.getToken(BKOOLParser.RP, 0)
+            return self.getToken(PYMJCParser.RP, 0)
 
         def literal(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(BKOOLParser.LiteralContext)
+                return self.getTypedRuleContexts(PYMJCParser.LiteralContext)
             else:
-                return self.getTypedRuleContext(BKOOLParser.LiteralContext,i)
+                return self.getTypedRuleContext(PYMJCParser.LiteralContext,i)
 
 
         def CM(self, i:int=None):
             if i is None:
-                return self.getTokens(BKOOLParser.CM)
+                return self.getTokens(PYMJCParser.CM)
             else:
-                return self.getToken(BKOOLParser.CM, i)
+                return self.getToken(PYMJCParser.CM, i)
 
         def WS(self, i:int=None):
             if i is None:
-                return self.getTokens(BKOOLParser.WS)
+                return self.getTokens(PYMJCParser.WS)
             else:
-                return self.getToken(BKOOLParser.WS, i)
+                return self.getToken(PYMJCParser.WS, i)
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_array_lit
+            return PYMJCParser.RULE_array_lit
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArray_lit" ):
+                return visitor.visitArray_lit(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def array_lit(self):
 
-        localctx = BKOOLParser.Array_litContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.Array_litContext(self, self._ctx, self.state)
         self.enterRule(localctx, 42, self.RULE_array_lit)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 290
-            self.match(BKOOLParser.LP)
+            self.match(PYMJCParser.LP)
             self.state = 302
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << BKOOLParser.INT_LIT) | (1 << BKOOLParser.FLOAT_LIT) | (1 << BKOOLParser.BOOL_LIT) | (1 << BKOOLParser.STR_LIT))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PYMJCParser.INT_LIT) | (1 << PYMJCParser.FLOAT_LIT) | (1 << PYMJCParser.BOOL_LIT) | (1 << PYMJCParser.STR_LIT))) != 0):
                 self.state = 291
                 self.literal()
                 self.state = 299
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while _la==BKOOLParser.CM:
+                while _la==PYMJCParser.CM:
                     self.state = 292
-                    self.match(BKOOLParser.CM)
+                    self.match(PYMJCParser.CM)
                     self.state = 294
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if _la==BKOOLParser.WS:
+                    if _la==PYMJCParser.WS:
                         self.state = 293
-                        self.match(BKOOLParser.WS)
+                        self.match(PYMJCParser.WS)
 
 
                     self.state = 296
@@ -2106,7 +2238,7 @@ class BKOOLParser ( Parser ):
 
 
             self.state = 304
-            self.match(BKOOLParser.RP)
+            self.match(PYMJCParser.RP)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -2124,31 +2256,37 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def ID(self):
-            return self.getToken(BKOOLParser.ID, 0)
+            return self.getToken(PYMJCParser.ID, 0)
 
         def CM(self):
-            return self.getToken(BKOOLParser.CM, 0)
+            return self.getToken(PYMJCParser.CM, 0)
 
         def listID(self):
-            return self.getTypedRuleContext(BKOOLParser.ListIDContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ListIDContext,0)
 
 
         def ASSIGN(self):
-            return self.getToken(BKOOLParser.ASSIGN, 0)
+            return self.getToken(PYMJCParser.ASSIGN, 0)
 
         def exp(self):
-            return self.getTypedRuleContext(BKOOLParser.ExpContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ExpContext,0)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_listID
+            return PYMJCParser.RULE_listID
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitListID" ):
+                return visitor.visitListID(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def listID(self):
 
-        localctx = BKOOLParser.ListIDContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.ListIDContext(self, self._ctx, self.state)
         self.enterRule(localctx, 44, self.RULE_listID)
         self._la = 0 # Token type
         try:
@@ -2158,19 +2296,19 @@ class BKOOLParser ( Parser ):
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 306
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
                 self.state = 309
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==BKOOLParser.ASSIGN:
+                if _la==PYMJCParser.ASSIGN:
                     self.state = 307
-                    self.match(BKOOLParser.ASSIGN)
+                    self.match(PYMJCParser.ASSIGN)
                     self.state = 308
                     self.exp(0)
 
 
                 self.state = 311
-                self.match(BKOOLParser.CM)
+                self.match(PYMJCParser.CM)
                 self.state = 312
                 self.listID()
                 pass
@@ -2178,13 +2316,13 @@ class BKOOLParser ( Parser ):
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 313
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
                 self.state = 316
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==BKOOLParser.ASSIGN:
+                if _la==PYMJCParser.ASSIGN:
                     self.state = 314
-                    self.match(BKOOLParser.ASSIGN)
+                    self.match(PYMJCParser.ASSIGN)
                     self.state = 315
                     self.exp(0)
 
@@ -2209,31 +2347,37 @@ class BKOOLParser ( Parser ):
             self.parser = parser
 
         def ID(self):
-            return self.getToken(BKOOLParser.ID, 0)
+            return self.getToken(PYMJCParser.ID, 0)
 
         def CM(self):
-            return self.getToken(BKOOLParser.CM, 0)
+            return self.getToken(PYMJCParser.CM, 0)
 
         def ids_att(self):
-            return self.getTypedRuleContext(BKOOLParser.Ids_attContext,0)
+            return self.getTypedRuleContext(PYMJCParser.Ids_attContext,0)
 
 
         def ASSIGN_ATT(self):
-            return self.getToken(BKOOLParser.ASSIGN_ATT, 0)
+            return self.getToken(PYMJCParser.ASSIGN_ATT, 0)
 
         def exp(self):
-            return self.getTypedRuleContext(BKOOLParser.ExpContext,0)
+            return self.getTypedRuleContext(PYMJCParser.ExpContext,0)
 
 
         def getRuleIndex(self):
-            return BKOOLParser.RULE_ids_att
+            return PYMJCParser.RULE_ids_att
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIds_att" ):
+                return visitor.visitIds_att(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
 
     def ids_att(self):
 
-        localctx = BKOOLParser.Ids_attContext(self, self._ctx, self.state)
+        localctx = PYMJCParser.Ids_attContext(self, self._ctx, self.state)
         self.enterRule(localctx, 46, self.RULE_ids_att)
         self._la = 0 # Token type
         try:
@@ -2243,19 +2387,19 @@ class BKOOLParser ( Parser ):
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 320
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
                 self.state = 323
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==BKOOLParser.ASSIGN_ATT:
+                if _la==PYMJCParser.ASSIGN_ATT:
                     self.state = 321
-                    self.match(BKOOLParser.ASSIGN_ATT)
+                    self.match(PYMJCParser.ASSIGN_ATT)
                     self.state = 322
                     self.exp(0)
 
 
                 self.state = 325
-                self.match(BKOOLParser.CM)
+                self.match(PYMJCParser.CM)
                 self.state = 326
                 self.ids_att()
                 pass
@@ -2263,13 +2407,13 @@ class BKOOLParser ( Parser ):
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 327
-                self.match(BKOOLParser.ID)
+                self.match(PYMJCParser.ID)
                 self.state = 330
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==BKOOLParser.ASSIGN_ATT:
+                if _la==PYMJCParser.ASSIGN_ATT:
                     self.state = 328
-                    self.match(BKOOLParser.ASSIGN_ATT)
+                    self.match(PYMJCParser.ASSIGN_ATT)
                     self.state = 329
                     self.exp(0)
 

@@ -1,7 +1,4 @@
-grammar BKOOL;
-// Tran Quoc Vinh
-// MSSV: 1915953
-	
+grammar PYMJC;	
 
 @lexer::header {
 from lexererr import *

@@ -1,4 +1,4 @@
-# Generated from c:\Users\tranq\workspace\HK221\PPL\Assignment\assignment3\initial\src\main\bkool\parser\BKOOL.g4 by ANTLR 4.9.2
+# Generated from c:\Users\tranq\workspace\HK221\PPL\PyMJC\initial\src\main\pymjc\parser\PYMJC.g4 by ANTLR 4.9.2
 from antlr4 import *
 from io import StringIO
 import sys
@@ -196,7 +196,7 @@ def serializedATN():
         return buf.getvalue()
 
 
-class BKOOLLexer(Lexer):
+class PYMJCLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -302,7 +302,7 @@ class BKOOLLexer(Lexer):
                   "TO", "DOWNTO", "RETURN", "ID", "WS", "ERROR_CHAR", "UNCLOSE_STRING", 
                   "ILLEGAL_ESCAPE" ]
 
-    grammarFileName = "BKOOL.g4"
+    grammarFileName = "PYMJC.g4"
 
     def __init__(self, input=None, output:TextIO = sys.stdout):
         super().__init__(input, output)

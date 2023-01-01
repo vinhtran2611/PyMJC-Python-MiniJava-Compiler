@@ -1,19 +1,19 @@
-from BKOOLVisitor import BKOOLVisitor
-from BKOOLParser import BKOOLParser
+from PYMJCVisitor import PYMJCVisitor
+from PYMJCParser import PYMJCParser
 from AST import *
 
-class ASTGeneration(BKOOLVisitor):
+class ASTGeneration(PYMJCVisitor):
 
-    # Visit a parse tree produced by BKOOLParser#program.
-    def visitProgram(self, ctx:BKOOLParser.ProgramContext):
+    # Visit a parse tree produced by PYMJCParser#program.
+    def visitProgram(self, ctx:PYMJCParser.ProgramContext):
         decls = []
         for class_decl in ctx.class_decl():
             decl = self.visit(class_decl)
             decls.append(decl)
         return Program(decls)
 
-    # Visit a parse tree produced by BKOOLParser#class_decl.
-    def visitClass_decl(self, ctx:BKOOLParser.Class_declContext):
+    # Visit a parse tree produced by PYMJCParser#class_decl.
+    def visitClass_decl(self, ctx:PYMJCParser.Class_declContext):
         if ctx.EXTENDS():
             name = Id(ctx.ID(0).getText())
             parent = Id(ctx.ID(1).getText())
@@ -30,8 +30,8 @@ class ASTGeneration(BKOOLVisitor):
                     mem_decls.append(ele)
         return ClassDecl(name, mem_decls, parent)
 
-    # Visit a parse tree produced by BKOOLParser#bktype.
-    def visitBktype(self, ctx:BKOOLParser.BktypeContext):
+    # Visit a parse tree produced by PYMJCParser#bktype.
+    def visitBktype(self, ctx:PYMJCParser.BktypeContext):
         if ctx.INT():
             type = IntType()
         elif ctx.FLOAT():
@@ -50,24 +50,24 @@ class ASTGeneration(BKOOLVisitor):
             return ArrayType(size, type)
         return type
         
-    # Visit a parse tree produced by BKOOLParser#member.
-    def visitMember(self, ctx:BKOOLParser.MemberContext):
+    # Visit a parse tree produced by PYMJCParser#member.
+    def visitMember(self, ctx:PYMJCParser.MemberContext):
         if ctx.attribute_decl():
             return self.visit(ctx.attribute_decl())
         else:
             return self.visit(ctx.method_decl())
 
 
-    # Visit a parse tree produced by BKOOLParser#attribute_decl.
-    def visitAttribute_decl(self, ctx:BKOOLParser.Attribute_declContext):
+    # Visit a parse tree produced by PYMJCParser#attribute_decl.
+    def visitAttribute_decl(self, ctx:PYMJCParser.Attribute_declContext):
         if ctx.mutable():
             return self.visit(ctx.mutable())
         else:
             return self.visit(ctx.immutable())
 
 
-    # Visit a parse tree produced by BKOOLParser#immutable.
-    def visitImmutable(self, ctx:BKOOLParser.ImmutableContext):
+    # Visit a parse tree produced by PYMJCParser#immutable.
+    def visitImmutable(self, ctx:PYMJCParser.ImmutableContext):
         k = Static() if ctx.STATIC() else Instance()
         type, ids = self.visit(ctx.var_decl_att())
         attr = []
@@ -78,8 +78,8 @@ class ASTGeneration(BKOOLVisitor):
         return attr
         
 
-    # Visit a parse tree produced by BKOOLParser#mutable.
-    def visitMutable(self, ctx:BKOOLParser.MutableContext):
+    # Visit a parse tree produced by PYMJCParser#mutable.
+    def visitMutable(self, ctx:PYMJCParser.MutableContext):
         k = Static() if ctx.STATIC() else Instance()
         type, ids = self.visit(ctx.var_decl_att())
         attr = []
@@ -90,22 +90,22 @@ class ASTGeneration(BKOOLVisitor):
         return attr
 
 
-    # Visit a parse tree produced by BKOOLParser#var_decl.
-    def visitVar_decl(self, ctx:BKOOLParser.Var_declContext):
+    # Visit a parse tree produced by PYMJCParser#var_decl.
+    def visitVar_decl(self, ctx:PYMJCParser.Var_declContext):
         type = self.visit(ctx.bktype())
         ids = self.visit(ctx.listID())
         if ctx.FINAL():
             return type, ids, True
         return type, ids
     
-    # Visit a parse tree produced by BKOOLParser#var_decl_att.
-    def visitVar_decl_att(self, ctx:BKOOLParser.Var_decl_attContext):
+    # Visit a parse tree produced by PYMJCParser#var_decl_att.
+    def visitVar_decl_att(self, ctx:PYMJCParser.Var_decl_attContext):
         type = self.visit(ctx.bktype())
         ids = self.visit(ctx.ids_att())
         return type, ids
 
-    # Visit a parse tree produced by BKOOLParser#method_decl.
-    def visitMethod_decl(self, ctx:BKOOLParser.Method_declContext):
+    # Visit a parse tree produced by PYMJCParser#method_decl.
+    def visitMethod_decl(self, ctx:PYMJCParser.Method_declContext):
         if ctx.bktype():
             kind = Instance()
             if ctx.STATIC():
@@ -135,12 +135,12 @@ class ASTGeneration(BKOOLVisitor):
 
             return MethodDecl(kind, name, params, rtype, body)
 
-    # Visit a parse tree produced by BKOOLParser#params.
-    def visitParams(self, ctx:BKOOLParser.ParamsContext):
+    # Visit a parse tree produced by PYMJCParser#params.
+    def visitParams(self, ctx:PYMJCParser.ParamsContext):
         return [self.visit(v) for v in ctx.var_decl()]
 
-    # Visit a parse tree produced by BKOOLParser#for_stmt.
-    def visitFor_stmt(self, ctx:BKOOLParser.For_stmtContext):
+    # Visit a parse tree produced by PYMJCParser#for_stmt.
+    def visitFor_stmt(self, ctx:PYMJCParser.For_stmtContext):
         id = Id(ctx.ID().getText())
         exp1 = self.visit(ctx.exp(0))
         exp2 = self.visit(ctx.exp(1))
@@ -150,8 +150,8 @@ class ASTGeneration(BKOOLVisitor):
             return For(id, exp1, exp2, up, loop_stmt[0])
         return For(id, exp1, exp2, up, loop_stmt)
 
-    # Visit a parse tree produced by BKOOLParser#assign_stmt.
-    def visitAssign_stmt(self, ctx:BKOOLParser.Assign_stmtContext):
+    # Visit a parse tree produced by PYMJCParser#assign_stmt.
+    def visitAssign_stmt(self, ctx:PYMJCParser.Assign_stmtContext):
         exp = self.visit(ctx.exp())
         ids = [self.visit(l) for l in ctx.lhs()]
         asl = []
@@ -162,8 +162,8 @@ class ASTGeneration(BKOOLVisitor):
             return asl[0]
         return asl[::-1]
     
-    # Visit a parse tree produced by BKOOLParser#if_stmt.
-    def visitIf_stmt(self, ctx:BKOOLParser.If_stmtContext):
+    # Visit a parse tree produced by PYMJCParser#if_stmt.
+    def visitIf_stmt(self, ctx:PYMJCParser.If_stmtContext):
         expr = self.visit(ctx.exp())
         if ctx.ELSE():
             then_stmt = self.visit(ctx.stmt(0))
@@ -173,8 +173,8 @@ class ASTGeneration(BKOOLVisitor):
             else_stmt = None
         return If(expr, then_stmt, else_stmt)
     
-    # Visit a parse tree produced by BKOOLParser#method_invocation.
-    def visitMethod_invocation(self, ctx:BKOOLParser.Method_invocationContext):
+    # Visit a parse tree produced by PYMJCParser#method_invocation.
+    def visitMethod_invocation(self, ctx:PYMJCParser.Method_invocationContext):
         obj = self.visit(ctx.exp())
         method = Id(ctx.ID().getText())
         params = self.visit(ctx.list_exp())
@@ -182,15 +182,15 @@ class ASTGeneration(BKOOLVisitor):
 
         return CallStmt(obj, method, params)
 
-    # Visit a parse tree produced by BKOOLParser#list_exp.
-    def visitList_exp(self, ctx:BKOOLParser.List_expContext):
+    # Visit a parse tree produced by PYMJCParser#list_exp.
+    def visitList_exp(self, ctx:PYMJCParser.List_expContext):
         if ctx.getChildCount() == 1:
             return [self.visit(ctx.exp())]
         else:
             return [self.visit(ctx.exp())] + self.visit(ctx.list_exp())
 
-    # Visit a parse tree produced by BKOOLParser#block_stmt.
-    def visitBlock_stmt(self, ctx:BKOOLParser.Block_stmtContext):
+    # Visit a parse tree produced by PYMJCParser#block_stmt.
+    def visitBlock_stmt(self, ctx:PYMJCParser.Block_stmtContext):
         stmts = []
         for s in ctx.stmt():
             stmt = self.visit(s)
@@ -210,8 +210,8 @@ class ASTGeneration(BKOOLVisitor):
                 vars += [VarDecl(id, type, val_init) for id, val_init in ids]
         return Block(vars, stmts)
  
-    # Visit a parse tree produced by BKOOLParser#stmt.
-    def visitStmt(self, ctx:BKOOLParser.StmtContext):
+    # Visit a parse tree produced by PYMJCParser#stmt.
+    def visitStmt(self, ctx:PYMJCParser.StmtContext):
         if ctx.block_stmt():
             return self.visit(ctx.block_stmt())
         elif ctx.assign_stmt():
@@ -230,8 +230,8 @@ class ASTGeneration(BKOOLVisitor):
         elif ctx.method_invocation():
             return self.visit(ctx.method_invocation())
 
-    # Visit a parse tree produced by BKOOLParser#exp.
-    def visitExp(self, ctx:BKOOLParser.ExpContext):
+    # Visit a parse tree produced by PYMJCParser#exp.
+    def visitExp(self, ctx:PYMJCParser.ExpContext):
         if ctx.getChildCount() == 1 and (ctx.ID() or ctx.THIS()):
             return Id(ctx.getText())
         elif ctx.literal():
@@ -274,8 +274,8 @@ class ASTGeneration(BKOOLVisitor):
                 params = self.visit(ctx.list_exp())
             return NewExpr(class_name, params)    
       
-    # Visit a parse tree produced by BKOOLParser#lhs.
-    def visitLhs(self, ctx:BKOOLParser.LhsContext):
+    # Visit a parse tree produced by PYMJCParser#lhs.
+    def visitLhs(self, ctx:PYMJCParser.LhsContext):
         if ctx.getChildCount() == 1:
             return Id(ctx.getText())
         elif ctx.LQB():
@@ -287,8 +287,8 @@ class ASTGeneration(BKOOLVisitor):
             field_name = Id(ctx.ID().getText())
             return FieldAccess(obj, field_name)
 
-    # Visit a parse tree produced by BKOOLParser#literals.
-    def visitLiteral(self, ctx:BKOOLParser.LiteralContext):
+    # Visit a parse tree produced by PYMJCParser#literals.
+    def visitLiteral(self, ctx:PYMJCParser.LiteralContext):
         if ctx.INT_LIT():
             return IntLiteral(int(ctx.getText()))
         elif ctx.FLOAT_LIT():
@@ -298,15 +298,15 @@ class ASTGeneration(BKOOLVisitor):
         elif ctx.STR_LIT():
             return StringLiteral(ctx.getText())
     
-    def visitArray_lit(self, ctx:BKOOLParser.Array_litContext):
+    def visitArray_lit(self, ctx:PYMJCParser.Array_litContext):
         lits = []
         for l in ctx.literal():
             lit = self.visit(l)
             lits.append(lit)
         return ArrayLiteral(lits)
 
-    # Visit a parse tree produced by BKOOLParser#listID.
-    def visitListID(self, ctx:BKOOLParser.ListIDContext):
+    # Visit a parse tree produced by PYMJCParser#listID.
+    def visitListID(self, ctx:PYMJCParser.ListIDContext):
         if ctx.CM():
             if ctx.ASSIGN():
                 return [(Id(ctx.ID().getText()), self.visit(ctx.exp()))] + self.visit(ctx.listID())
@@ -318,8 +318,8 @@ class ASTGeneration(BKOOLVisitor):
             else:
                 return [(Id(ctx.ID().getText()), None)] 
 
-    # Visit a parse tree produced by BKOOLParser#ids_att.
-    def visitIds_att(self, ctx:BKOOLParser.Ids_attContext):
+    # Visit a parse tree produced by PYMJCParser#ids_att.
+    def visitIds_att(self, ctx:PYMJCParser.Ids_attContext):
         if ctx.CM():
             if ctx.ASSIGN_ATT():
                 return [(Id(ctx.ID().getText()), self.visit(ctx.exp()))] + self.visit(ctx.ids_att())
