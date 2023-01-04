@@ -1,1 +1,1 @@
-aCBbdc
+class a {                         static int a() {};                            }

@@ -1,6 +1,3 @@
 class Shape{
-            static int a = 10;
-            final float b = 0.20;
-            static final int c = 10;
-            final static float d = 0.20;
+            static final int a;
         }

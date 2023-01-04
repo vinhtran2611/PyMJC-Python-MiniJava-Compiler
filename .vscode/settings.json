@@ -1,0 +1,10 @@
+{
+    "python.analysis.extraPaths": [
+        "./initial/target",
+        "./initial/src/main/pymjc/utils",
+        "./initial/src/main/pymjc/parser",
+        "./initial/src/main/pymjc/astgen",
+        "./initial/src/main/pymjc/checker",
+        "./initial/src/test"
+    ]
+}

@@ -1,1 +1,1 @@
-abc
+class a {                         static int a;                            }

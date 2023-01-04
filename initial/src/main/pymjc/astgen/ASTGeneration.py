@@ -58,18 +58,10 @@ class ASTGeneration(PYMJCVisitor):
             return self.visit(ctx.method_decl())
 
 
-    # Visit a parse tree produced by PYMJCParser#attribute_decl.
-    def visitAttribute_decl(self, ctx:PYMJCParser.Attribute_declContext):
-        if ctx.mutable():
-            return self.visit(ctx.mutable())
-        else:
-            return self.visit(ctx.immutable())
-
-
     # Visit a parse tree produced by PYMJCParser#immutable.
     def visitImmutable(self, ctx:PYMJCParser.ImmutableContext):
         k = Static() if ctx.STATIC() else Instance()
-        type, ids = self.visit(ctx.var_decl_att())
+        type, ids = self.visit(ctx.var_decl())
         attr = []
         for id, val_init in ids:
             v = ConstDecl(id, type, val_init)
@@ -98,11 +90,6 @@ class ASTGeneration(PYMJCVisitor):
             return type, ids, True
         return type, ids
     
-    # Visit a parse tree produced by PYMJCParser#var_decl_att.
-    def visitVar_decl_att(self, ctx:PYMJCParser.Var_decl_attContext):
-        type = self.visit(ctx.bktype())
-        ids = self.visit(ctx.ids_att())
-        return type, ids
 
     # Visit a parse tree produced by PYMJCParser#method_decl.
     def visitMethod_decl(self, ctx:PYMJCParser.Method_declContext):

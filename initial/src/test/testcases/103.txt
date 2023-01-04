@@ -1,1 +1,1 @@
-_abc
+class a {                         final int a;                            }

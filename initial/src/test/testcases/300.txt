@@ -1,4 +1,2 @@
-class Shape {
-            int a;
-            void f(){}
-        }
+class main {}
+        

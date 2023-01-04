@@ -1,1 +1,1 @@
-123a123
+class a {                         final int a;                                final float b, c;                                final string e;                                final boolean f;                                final int[5] g;                            }

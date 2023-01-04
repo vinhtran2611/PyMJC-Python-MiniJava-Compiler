@@ -11,22 +11,19 @@ options{
 program: class_decl+ EOF;
 class_decl: CLASS ID (EXTENDS ID)? LP member* RP;
 
-
 member: attribute_decl 
 	| 	method_decl
 ;
 
 // attribute
 attribute_decl: mutable | immutable;
-immutable: (STATIC? FINAL | FINAL STATIC?) var_decl_att SEMI; 
-mutable: STATIC? var_decl_att SEMI; 
-
-var_decl_att: bktype ids_att;
-var_decl: FINAL? bktype listID;
+immutable: (STATIC? FINAL | FINAL STATIC?) var_decl SEMI; 
+mutable: STATIC? var_decl SEMI; 
+var_decl: javatype listID;
 
 // method
-method_decl: STATIC? bktype ID LB params RB block_stmt?
-			| ID LB params RB block_stmt?;
+method_decl: ID LB params RB block_stmt? // constructor
+		|	STATIC? javatype ID LB params RB block_stmt?; // class method
 params: (var_decl (SEMI var_decl)*)?;
 
 // statement
@@ -49,7 +46,6 @@ stmt: 	block_stmt
 ;
 
 //EXPRESSION
-
 exp:	LB exp RB 
 	|	<assoc=right> NEW ID LB list_exp? RB
 	|	exp DOT ID (LB list_exp? RB)?
@@ -95,8 +91,7 @@ OR: '||';
 AND: '&&';
 NOT: '!';	
 CONCAT: '^';
-ASSIGN: ':=';
-ASSIGN_ATT: '=';
+ASSIGN: '=';
 
 
 // Separator
@@ -110,10 +105,11 @@ SEMI: ';' ;
 DOT: '.';
 CM: ',';
 
-// Literal
-literal: INT_LIT | FLOAT_LIT | STR_LIT | BOOL_LIT;
-bktype: (INT | VOID | FLOAT | STRING | BOOLEAN | VOID | ID ) (LQB exp RQR)?;
+javatype: (INT | VOID | FLOAT | STRING | BOOLEAN | VOID | ID | array_type);
+array_type: javatype (LQB exp RQR);
 
+// Literal
+literal: INT_LIT | FLOAT_LIT | STR_LIT | BOOL_LIT | array_lit;
 
 fragment DIGIT: [0-9]+;
 
@@ -160,13 +156,8 @@ TO: 'to';
 DOWNTO: 'downto';
 RETURN: 'return';
 
-
 listID: ID (ASSIGN exp)? CM listID
 	|	ID (ASSIGN exp)?
-;
-
-ids_att: ID (ASSIGN_ATT exp)? CM ids_att
-	|	ID (ASSIGN_ATT exp)?
 ;
 
 ID: [a-zA-Z_][a-zA-Z0-9_]*;

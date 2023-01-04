@@ -2,5 +2,4 @@ class Shape{
             int numOfShape = 10;
             float immuAttribute = 0.20;
             int[2] x = {1, 2};
-
         }

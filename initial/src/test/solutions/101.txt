@@ -1,1 +1,1 @@
-abc,<EOF>
+class,a,{,static,int,a,;,},<EOF>
